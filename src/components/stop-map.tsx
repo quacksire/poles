@@ -15,6 +15,9 @@ import {
   CircleHelp,
   Download,
   Flag,
+  Clock3,
+  Info,
+  NotebookPen,
   SlidersHorizontal,
   MapPin,
   Minus,
@@ -31,23 +34,41 @@ import {
   describeQuestionAnswer,
   findQuestion,
   getBooleanValue,
+  getMultiChoiceValues,
   getSingleChoiceValue,
   normalizeStoredReport,
+  mergeSurveyAnswers,
   setBooleanAnswer,
   setSingleChoiceAnswer,
+  setMultiChoiceAnswer,
   surveyFilterDefinitions,
   surveyQuestionStates,
   surveyQuestions,
   surveySections,
   surveyStatusBand,
+  surveyIcons,
+  type SurveyIconName,
   type StopReport,
   type SurveyAnswers,
   type SurveyBooleanValue,
+  type SurveyMultiChoiceQuestion,
   type SurveyStatusFilter,
 } from "@/lib/survey";
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Combobox,
+  ComboboxChip,
+  ComboboxChips,
+  ComboboxChipsInput,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxItem,
+  ComboboxList,
+  ComboboxValue,
+  useComboboxAnchor,
+} from "@/components/ui/combobox";
 import {
   Drawer,
   DrawerContent,
@@ -74,25 +95,31 @@ import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 
 const MOBILE_SNAP_POINTS = [0.34, 0.9] as const;
-const QUESTION_NUMBER_BY_ID = new Map(
-  surveyQuestions.map((question, index) => [question.id, index + 1]),
-);
 const QUESTION_CARD_CLASS =
-  "grid grid-cols-[minmax(0,1fr)_11.5rem] items-center gap-3 rounded-2xl border border-border/90 bg-gradient-to-b from-background to-secondary/45 px-3 py-2 sm:px-4";
-const QUESTION_PROMPT_CLASS = "flex min-w-0 items-start gap-3";
+  "grid grid-cols-[minmax(0,1.45fr)_minmax(9.5rem,11.5rem)] items-center gap-2 rounded-2xl border border-border/90 bg-gradient-to-b from-background to-secondary/40 px-3 py-2.5 transition-[border-color,background-color] duration-150 ease-out hover:border-primary/20 hover:bg-background sm:px-4";
+const QUESTION_PROMPT_CLASS = "flex min-w-0 items-start gap-2";
 const QUESTION_TABS_LIST_CLASS =
   "!grid !h-auto !w-full items-stretch justify-stretch gap-1 rounded-xl bg-secondary/70 p-1";
 const QUESTION_TABS_TRIGGER_CLASS =
   "h-9 rounded-lg border border-transparent bg-transparent px-2 text-[12px] text-foreground/72 shadow-none transition-[color,background-color,border-color] duration-150 ease-out hover:text-foreground data-active:bg-background data-active:text-foreground data-active:shadow-none";
+const QUESTION_ICON_PILL_CLASS =
+  "mt-0.5 grid size-6 shrink-0 place-items-center rounded-full bg-primary/12 text-primary";
+
+const STOP_DRAWER_TABS = [
+  { value: "summary", label: "Summary", icon: Sparkles },
+  { value: "log", label: "Log", icon: NotebookPen },
+  { value: "details", label: "Details", icon: Info },
+  { value: "visits", label: "Visits", icon: Clock3 },
+] as const;
 
 const BOOLEAN_TAB_OPTIONS = [
   {
-    value: "true",
-    label: "Yes",
-    pillClassName: "bg-emerald-100 text-emerald-800",
+    value: "false",
+    label: "No",
+    pillClassName: "bg-rose-100 text-rose-800",
     activeClassName:
-      "border-emerald-300 bg-emerald-50 text-emerald-800 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]",
-    icon: Check,
+      "border-rose-300 bg-rose-50 text-rose-800 shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]",
+    icon: X,
   },
   {
     value: "unset",
@@ -103,12 +130,12 @@ const BOOLEAN_TAB_OPTIONS = [
     icon: Minus,
   },
   {
-    value: "false",
-    label: "No",
-    pillClassName: "bg-rose-100 text-rose-800",
+    value: "true",
+    label: "Yes",
+    pillClassName: "bg-emerald-100 text-emerald-800",
     activeClassName:
-      "border-rose-300 bg-rose-50 text-rose-800 shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]",
-    icon: X,
+      "border-emerald-300 bg-emerald-50 text-emerald-800 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]",
+    icon: Check,
   },
 ] as const satisfies ReadonlyArray<{
   value: SurveyBooleanValue;
@@ -133,13 +160,190 @@ type StopSurveySummary = {
   statusBand: SurveyStatusFilter;
 };
 
-function createDraft(contributor = ""): ReportDraft {
+function createDraftFromReport(report: StopReport | null = null): ReportDraft {
   return {
-    contributor,
+    contributor: "",
     visitedOn: new Date().toISOString().slice(0, 10),
     notes: "",
-    answers: createEmptySurveyAnswers(),
+    answers: report ? mergeSurveyAnswers(report.answers) : createEmptySurveyAnswers(),
   };
+}
+
+function getQuestionIcon(icon?: SurveyIconName) {
+  if (!icon) return null;
+  return surveyIcons[icon] ?? null;
+}
+
+function QuestionIcon({
+  icon,
+  className,
+}: {
+  icon?: SurveyIconName;
+  className?: string;
+}) {
+  const Icon = getQuestionIcon(icon);
+  if (!Icon) return null;
+
+  return (
+    <span className={cn(QUESTION_ICON_PILL_CLASS, className)}>
+      <Icon className="size-3.5" />
+    </span>
+  );
+}
+
+function getSnapshotTone(
+  question: (typeof surveyQuestions)[number],
+  answers: SurveyAnswers,
+) {
+  if (question.type === "boolean") {
+    const value = getBooleanValue(question, answers);
+
+    if (value === true) {
+      return {
+        wrapperClassName: "border-emerald-200 bg-emerald-50/75",
+        iconClassName: "bg-emerald-100 text-emerald-700",
+        valueClassName: "text-emerald-900",
+      };
+    }
+
+    if (value === false) {
+      return {
+        wrapperClassName: "border-rose-200 bg-rose-50/75",
+        iconClassName: "bg-rose-100 text-rose-700",
+        valueClassName: "text-rose-900",
+      };
+    }
+
+    return {
+      wrapperClassName: "border-amber-200 bg-amber-50/75",
+      iconClassName: "bg-amber-100 text-amber-800",
+      valueClassName: "text-amber-900",
+    };
+  }
+
+  const selectedCount =
+    question.type === "single-choice"
+      ? getSingleChoiceValue(question, answers)
+        ? 1
+        : 0
+      : getMultiChoiceValues(question, answers).length;
+
+  return {
+    wrapperClassName:
+      selectedCount > 0
+        ? "border-border/70 bg-background/90"
+        : "border-amber-200 bg-amber-50/75",
+    iconClassName:
+      selectedCount > 0
+        ? "bg-primary/10 text-primary"
+        : "bg-amber-100 text-amber-800",
+    valueClassName: selectedCount > 0 ? "text-foreground" : "text-amber-900",
+  };
+}
+
+const agencyToneClasses: Record<
+  NonNullable<NonNullable<SurveyMultiChoiceQuestion["options"][number]["tone"]>>,
+  string
+> = {
+  samtrans: "border-sky-200 bg-sky-50 text-sky-800",
+  caltrain: "border-rose-200 bg-rose-50 text-rose-800",
+  sfmta: "border-red-200 bg-red-50 text-red-800",
+  other: "border-border bg-muted/70 text-muted-foreground",
+};
+
+function AgencyMultiSelectField({
+  question,
+  value,
+  seed,
+  onChange,
+}: {
+  question: SurveyMultiChoiceQuestion;
+  value: string[];
+  seed: number;
+  onChange: (nextValues: string[]) => void;
+}) {
+  const anchorRef = useComboboxAnchor();
+
+  return (
+    <Combobox
+      key={`${question.id}:${seed}`}
+      multiple
+      autoHighlight
+      items={question.options.map((option) => option.id)}
+      defaultValue={value}
+      onValueChange={(nextValues) => onChange(nextValues)}
+      itemToStringLabel={(optionId) =>
+        question.options.find((option) => option.id === optionId)?.label ?? optionId
+      }
+      itemToStringValue={(optionId) => optionId}
+    >
+      <ComboboxChips ref={anchorRef} className="w-full">
+        <ComboboxValue>
+          {(values) => (
+            <>
+              {values.map((optionId: string) => {
+                const option =
+                  question.options.find((item) => item.id === optionId) ??
+                  ({ id: optionId, label: optionId } as (typeof question.options)[number]);
+                const OptionIcon = getQuestionIcon(option.icon);
+
+                return (
+                  <ComboboxChip
+                    key={option.id}
+                    className={cn(
+                      "rounded-full border px-2.5 py-1 text-[12px] font-medium shadow-none",
+                      option.tone
+                        ? agencyToneClasses[option.tone]
+                        : "border-border bg-muted text-foreground",
+                    )}
+                  >
+                    {OptionIcon ? <OptionIcon className="size-3.5" /> : null}
+                    <span>{option.label}</span>
+                  </ComboboxChip>
+                );
+              })}
+              <ComboboxChipsInput />
+            </>
+          )}
+        </ComboboxValue>
+      </ComboboxChips>
+      <ComboboxContent anchor={anchorRef}>
+        <ComboboxEmpty>No items found.</ComboboxEmpty>
+        <ComboboxList>
+          {(item) => {
+            const option = question.options.find((candidate) => candidate.id === item);
+            const OptionIcon = option ? getQuestionIcon(option.icon) : null;
+
+            return (
+              <ComboboxItem
+                key={item}
+                value={item}
+                className={cn(
+                  "rounded-full border px-3 py-2 text-[12px] font-medium transition-colors",
+                  option?.tone
+                    ? agencyToneClasses[option.tone]
+                    : "border-border bg-background text-foreground",
+                )}
+              >
+                {OptionIcon ? <OptionIcon className="size-3.5" /> : null}
+                <span>{option?.label ?? item}</span>
+              </ComboboxItem>
+            );
+          }}
+        </ComboboxList>
+      </ComboboxContent>
+    </Combobox>
+  );
+}
+
+function getQuestionSummaryValue(
+  question: (typeof surveyQuestions)[number],
+  answers: SurveyAnswers,
+) {
+  const value = describeQuestionAnswer(question, answers);
+  const prefix = `${question.prompt}: `;
+
+  return value.startsWith(prefix) ? value.slice(prefix.length) : value;
 }
 
 function createStatusFilters(): Record<SurveyStatusFilter, boolean> {
@@ -256,6 +460,22 @@ function signalTone(stop: NormalizedStop) {
   return "bg-muted text-muted-foreground";
 }
 
+function statusTone(statusBand: SurveyStatusFilter | null | undefined) {
+  if (statusBand === "done") {
+    return "border-emerald-200 bg-emerald-50/70";
+  }
+
+  if (statusBand === "partial") {
+    return "border-amber-200 bg-amber-50/70";
+  }
+
+  if (statusBand === "not_surveyed") {
+    return "border-rose-200 bg-rose-50/70";
+  }
+
+  return "border-border/80 bg-linear-to-r from-primary/7 via-background to-secondary/70";
+}
+
 function crowdCoverage(reports: StopReport[]) {
   const distinctStops = new Set(reports.map((report) => report.stopId));
   return {
@@ -350,7 +570,7 @@ export function StopMap() {
     MOBILE_SNAP_POINTS[0],
   );
   const [selectedStopId, setSelectedStopId] = useState<string | null>(null);
-  const [selectedStopTab, setSelectedStopTab] = useState("field");
+  const [selectedStopTab, setSelectedStopTab] = useState("summary");
   const [searchValue, setSearchValue] = useState("");
   const deferredSearch = useDeferredValue(searchValue.trim().toLowerCase());
   const [reports, setReports] = useState<StopReport[]>([]);
@@ -359,10 +579,11 @@ export function StopMap() {
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
   const [reportNotice, setReportNotice] = useState<string | null>(null);
+  const [multiChoiceDraftSeed, setMultiChoiceDraftSeed] = useState(0);
   const [mapFiltersOpen, setMapFiltersOpen] = useState(false);
   const [statusFilters, setStatusFilters] = useState(createStatusFilters);
   const [attributeFilters, setAttributeFilters] = useState(createAttributeFilters);
-  const [draft, setDraft] = useState<ReportDraft>(() => createDraft());
+  const [draft, setDraft] = useState<ReportDraft>(() => createDraftFromReport());
 
   async function loadReports() {
     setIsLoadingReports(true);
@@ -549,6 +770,8 @@ export function StopMap() {
   const selectedSummary = selectedStop
     ? reportSummaryByStop.get(selectedStop.id) ?? null
     : null;
+  const latestSelectedReport = selectedSummary?.latestReport ?? null;
+  const hasLoggedVisit = Boolean(latestSelectedReport);
   const draftQuestionStates = useMemo(
     () => surveyQuestionStates(draft.answers),
     [draft.answers],
@@ -558,11 +781,11 @@ export function StopMap() {
   ).length;
 
   useEffect(() => {
-    const contributor = draft.contributor;
-    setDraft(createDraft(contributor));
+    setDraft(createDraftFromReport());
     setReportNotice(null);
     setSaveError(null);
-    setSelectedStopTab("field");
+    setSelectedStopTab("summary");
+    setMultiChoiceDraftSeed((current) => current + 1);
   }, [selectedStopId]);
 
   useEffect(() => {
@@ -617,7 +840,7 @@ export function StopMap() {
 
   function selectStop(stopId: string, options?: { focusSurvey?: boolean }) {
     focusSurveyOnSelectRef.current = Boolean(options?.focusSurvey);
-    setSelectedStopTab("field");
+    setSelectedStopTab("summary");
     setSelectedStopId(stopId);
   }
 
@@ -661,7 +884,9 @@ export function StopMap() {
   }
 
   function focusSurveyForm() {
-    setSelectedStopTab("field");
+    setSelectedStopTab("log");
+    setDraft(createDraftFromReport(selectedSummary?.latestReport));
+    setMultiChoiceDraftSeed((current) => current + 1);
     if (!isDesktop) {
       setDrawerOpen(true);
       setActiveSnapPoint(MOBILE_SNAP_POINTS[1]);
@@ -675,8 +900,6 @@ export function StopMap() {
   async function submitReport(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!selectedStop || isSaving) return;
-
-    const contributor = draft.contributor;
 
     setIsSaving(true);
     setSaveError(null);
@@ -693,11 +916,12 @@ export function StopMap() {
 
       setReports((current) => [nextReport, ...current]);
       setReportNotice("Field visit saved to D1.");
-      setSelectedStopTab("visits");
+      setSelectedStopTab("summary");
       if (!isDesktop) {
         setActiveSnapPoint(MOBILE_SNAP_POINTS[1]);
       }
-      setDraft(createDraft(contributor));
+      setDraft(createDraftFromReport(nextReport));
+      setMultiChoiceDraftSeed((current) => current + 1);
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "Failed to save field visit.";
@@ -732,7 +956,7 @@ export function StopMap() {
               <MarkerContent>
                 <button
                   type="button"
-                  onClick={() => selectStop(stop.id, { focusSurvey: true })}
+                  onClick={() => selectStop(stop.id)}
                   className="cursor-pointer"
                   aria-label={`Survey ${stop.name}`}
                 >
@@ -839,6 +1063,14 @@ export function StopMap() {
                           checked={attributeFilters[filter.id]}
                           onCheckedChange={() => toggleAttributeFilter(filter.id)}
                         />
+                        {filter.icon ? (
+                          <span className="grid size-5 place-items-center rounded-full bg-primary/10 text-primary">
+                            {(() => {
+                              const Icon = getQuestionIcon(filter.icon);
+                              return Icon ? <Icon className="size-3" /> : null;
+                            })()}
+                          </span>
+                        ) : null}
                         <span>{filter.label}</span>
                       </label>
                     ))}
@@ -865,111 +1097,104 @@ export function StopMap() {
         <DrawerContent
           showOverlay={!isDesktop}
           className={cn(
-            "overflow-hidden border border-border bg-card shadow-[0_6px_18px_rgba(32,42,57,0.06)] data-[vaul-drawer-direction=bottom]:inset-x-0 data-[vaul-drawer-direction=bottom]:bottom-0 data-[vaul-drawer-direction=bottom]:rounded-t-xl data-[vaul-drawer-direction=bottom]:border-x-0 data-[vaul-drawer-direction=bottom]:border-b-0 data-[vaul-drawer-direction=bottom]:max-h-[88dvh] data-[vaul-drawer-direction=left]:inset-y-0 data-[vaul-drawer-direction=left]:left-0 data-[vaul-drawer-direction=left]:w-[460px] data-[vaul-drawer-direction=left]:max-w-[calc(100vw-2rem)] data-[vaul-drawer-direction=left]:rounded-r-xl data-[vaul-drawer-direction=left]:border-y-0 data-[vaul-drawer-direction=left]:border-l-0 data-[vaul-drawer-direction=left]:sm:max-w-none",
+            "overflow-y-clip border border-border bg-card shadow-[0_6px_18px_rgba(32,42,57,0.06)] data-[vaul-drawer-direction=bottom]:inset-x-0 data-[vaul-drawer-direction=bottom]:bottom-0 data-[vaul-drawer-direction=bottom]:rounded-t-xl data-[vaul-drawer-direction=bottom]:border-x-0 data-[vaul-drawer-direction=bottom]:border-b-0 data-[vaul-drawer-direction=bottom]:max-h-[88dvh] data-[vaul-drawer-direction=left]:inset-y-0 data-[vaul-drawer-direction=left]:left-0 data-[vaul-drawer-direction=left]:w-[460px] data-[vaul-drawer-direction=left]:max-w-[calc(100vw-2rem)] data-[vaul-drawer-direction=left]:rounded-r-xl data-[vaul-drawer-direction=left]:border-y-0 data-[vaul-drawer-direction=left]:border-l-0 data-[vaul-drawer-direction=left]:sm:max-w-none",
           )}
         >
           {!isDesktop ? (
-            <div className="border-b border-border/70 bg-linear-to-b from-primary/6 to-card px-4 pb-3 pt-3">
+            <div className="px-4 pb-1 pt-1">
               <div className="flex flex-col items-center gap-2">
                 <DrawerHandle className="mt-0" />
-                <div className="inline-flex items-center gap-2 rounded-full bg-secondary/80 px-3 py-1 text-[11px] font-medium text-muted-foreground">
-                  <span className="inline-flex size-2 rounded-full bg-primary/70 shadow-[0_0_0_4px_rgba(70,149,155,0.12)]" />
-                  Swipe for stops and survey
-                </div>
               </div>
             </div>
           ) : null}
           <DrawerHeader className="border-b border-border bg-card p-3.5 !text-left md:p-5">
-            <div className="w-full">
-              <div className="min-w-0 space-y-2.5">
-                <div className="flex items-center gap-2.5">
+            {!selectedStop ? (
+                <div className="w-full">
+                  <div className="min-w-0 space-y-2.5">
+                    <div className="flex items-center gap-2.5">
                   <span className="grid size-9 place-items-center rounded-xl bg-linear-to-br from-primary/16 to-primary/8 text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]">
                     <StopIcon />
                   </span>
-                  <div className="min-w-0">
-                    <DrawerTitle className="text-[14px] font-semibold text-foreground">
-                      Poles
-                    </DrawerTitle>
-                    <DrawerDescription className="text-[11px] leading-relaxed text-muted-foreground">
-                      Drop in GTFS stop data, tap the map, save a fast field visit.
-                    </DrawerDescription>
+                      <div className="min-w-0">
+                        <DrawerTitle className="text-[14px] font-semibold text-foreground">
+                          Poles
+                        </DrawerTitle>
+                        <DrawerDescription className="text-[11px] leading-relaxed text-muted-foreground">
+                          Drop in GTFS stop data, tap the map, save a fast field visit.
+                        </DrawerDescription>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-3 rounded-xl border border-border/80 bg-linear-to-r from-secondary/80 via-background to-primary/6">
+                      <div className="px-3 py-2">
+                        <p className="text-[9px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
+                          Not Surveyed
+                        </p>
+                        <p className="mt-0.5 text-sm font-semibold text-foreground">
+                          {statusCounts.not_surveyed}
+                        </p>
+                      </div>
+                      <div className="border-x border-border/80 px-3 py-2">
+                        <p className="text-[9px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
+                          Partially
+                        </p>
+                        <p className="mt-0.5 text-sm font-semibold text-foreground">
+                          {statusCounts.partial}
+                        </p>
+                      </div>
+                      <div className="px-3 py-2">
+                        <p className="text-[9px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
+                          Done
+                        </p>
+                        <p className="mt-0.5 text-sm font-semibold text-foreground">
+                          {statusCounts.done}
+                        </p>
+                      </div>
+                    </div>
+
+                    <label className="relative block">
+                      <Search className="pointer-events-none absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
+                      <Input
+                          value={searchValue}
+                          onChange={(event) => setSearchValue(event.target.value)}
+                          placeholder="Search a stop, code, or hub"
+                          className="h-10 rounded-xl border-border bg-background pl-9 text-[12px]"
+                      />
+                    </label>
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <div className="min-h-5 text-[11px] text-muted-foreground">
+                        {isLoadingReports
+                            ? "Loading saved field visits…"
+                            : loadError
+                                ? loadError
+                                : `${reportCoverage.totalReports} cloud-synced visits loaded.`}
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {loadError ? (
+                            <Button
+                                type="button"
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => void loadReports()}
+                            >
+                              Retry
+                            </Button>
+                        ) : null}
+                        <a
+                            href="/api/reports?format=csv"
+                            className={cn(
+                                buttonVariants({ variant: "outline", size: "sm" }),
+                                "rounded-xl",
+                            )}
+                        >
+                          <Download className="size-3.5" />
+                          Export CSV
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
-
-                <div className="grid grid-cols-3 rounded-xl border border-border/80 bg-linear-to-r from-secondary/80 via-background to-primary/6">
-                  <div className="px-3 py-2">
-                    <p className="text-[9px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
-                      Not Surveyed
-                    </p>
-                    <p className="mt-0.5 text-sm font-semibold text-foreground">
-                      {statusCounts.not_surveyed}
-                    </p>
-                  </div>
-                  <div className="border-x border-border/80 px-3 py-2">
-                    <p className="text-[9px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
-                      Partially
-                    </p>
-                    <p className="mt-0.5 text-sm font-semibold text-foreground">
-                      {statusCounts.partial}
-                    </p>
-                  </div>
-                  <div className="px-3 py-2">
-                    <p className="text-[9px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
-                      Done
-                    </p>
-                    <p className="mt-0.5 text-sm font-semibold text-foreground">
-                      {statusCounts.done}
-                    </p>
-                  </div>
-                </div>
-
-                <label className="relative block">
-                  <Search className="pointer-events-none absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
-                  <Input
-                    value={searchValue}
-                    onChange={(event) => setSearchValue(event.target.value)}
-                    placeholder="Search a stop, code, or hub"
-                    className="h-10 rounded-xl border-border bg-background pl-9 text-[12px]"
-                  />
-                </label>
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <div className="min-h-5 text-[11px] text-muted-foreground">
-                    {isLoadingReports
-                      ? "Loading saved field visits…"
-                      : loadError
-                        ? loadError
-                        : `${reportCoverage.totalReports} cloud-synced visits loaded.`}
-                  </div>
-                  <div className="flex items-center gap-2">
-                    {loadError ? (
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => void loadReports()}
-                      >
-                        Retry
-                      </Button>
-                    ) : null}
-                    <a
-                      href="/api/reports?format=csv"
-                      className={cn(
-                        buttonVariants({ variant: "outline", size: "sm" }),
-                        "rounded-xl",
-                      )}
-                    >
-                      <Download className="size-3.5" />
-                      Export CSV
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </DrawerHeader>
-
-          <div className="min-h-0 flex-1 overflow-y-auto">
-            {selectedStop ? (
-              <section className="border-b border-border p-4 md:p-5">
+            ): (
                 <div className="space-y-3">
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
@@ -978,7 +1203,7 @@ export function StopMap() {
                           {selectedStop.name}
                         </p>
                         {selectedStop.code ? (
-                          <Badge variant="outline">Stop {selectedStop.code}</Badge>
+                            <Badge variant="outline">Stop {selectedStop.code}</Badge>
                         ) : null}
                       </div>
                       <p className="mt-1 max-w-[48ch] text-[12px] leading-relaxed text-muted-foreground">
@@ -987,10 +1212,10 @@ export function StopMap() {
                     </div>
 
                     <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => setSelectedStopId(null)}
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setSelectedStopId(null)}
                     >
                       Clear
                     </Button>
@@ -1001,86 +1226,120 @@ export function StopMap() {
                       {dataSignalLabel(selectedStop)}
                     </Badge>
                     {selectedSummary ? (
-                      <Badge variant="outline">
-                        {selectedSummary.reportCount} saved visits
-                      </Badge>
+                        <Badge variant="outline">
+                          {selectedSummary.reportCount} saved visits
+                        </Badge>
                     ) : null}
                     {selectedStop.stopDomain ? (
-                      <Badge variant="outline">{selectedStop.stopDomain}</Badge>
+                        <Badge variant="outline">{selectedStop.stopDomain}</Badge>
                     ) : null}
                   </div>
                 </div>
+            )}
 
-                <div className="mt-5 rounded-2xl border border-border/80 bg-linear-to-r from-primary/7 via-background to-secondary/70 p-4">
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0">
-                      <p className="text-base font-semibold text-foreground">
-                        Field visit first
-                      </p>
-                      <p className="mt-1 text-[12px] leading-relaxed text-muted-foreground">
-                        Start with the quick stop check, save the basics, then add notes if needed.
-                      </p>
-                    </div>
-                    <Button
-                      type="button"
-                      size="sm"
-                      className="rounded-xl"
-                      onClick={focusSurveyForm}
-                    >
-                      {selectedSummary?.reportCount ? "Update survey" : "Start survey"}
-                    </Button>
-                  </div>
 
-                  <div className="mt-3 flex items-center justify-between gap-3 rounded-xl bg-background/90 px-3 py-2">
-                    <div>
-                      <p className="text-[10px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
-                        Visit progress
-                      </p>
-                      <p className="mt-0.5 text-sm font-semibold text-foreground">
-                        {completedDraftQuestions} of {draftQuestionStates.length} prompts answered
-                      </p>
-                    </div>
-                    <Badge variant="outline" className="rounded-full">
-                      Notes optional
-                    </Badge>
-                  </div>
+          </DrawerHeader>
 
-                  <div className="-mx-1 mt-3 flex gap-2 overflow-x-auto px-1 pb-1">
-                    {draftQuestionStates.map((question) => (
-                      <span
-                        key={question.label}
-                        className={cn(
-                          "shrink-0 rounded-full px-2.5 py-1 text-[11px] font-medium",
-                          question.done
-                            ? "bg-primary/12 text-primary"
-                            : "bg-secondary text-muted-foreground",
-                        )}
-                      >
-                        {question.done ? <Check className="mr-1 inline size-3" /> : null}
-                        {question.label}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
+          <div className="min-h-0 flex-1 overflow-y-auto">
+            {selectedStop ? (
+              <section className="border-b border-border px-3 py-3 md:px-5 md:py-4">
                 <Tabs
                   value={selectedStopTab}
                   onValueChange={setSelectedStopTab}
-                  className="mt-5"
+                  className="space-y-3"
                 >
-                  <TabsList variant="line" className="w-full justify-start gap-3 p-0">
-                    <TabsTrigger value="field" className="px-3 text-[12px]">
-                      Field visit
-                    </TabsTrigger>
-                    <TabsTrigger value="details" className="px-3 text-[12px]">
-                      Details
-                    </TabsTrigger>
-                    <TabsTrigger value="visits" className="px-3 text-[12px]">
-                      Visits
-                    </TabsTrigger>
+                  <TabsList
+                    variant="default"
+                    className="grid h-10 w-full grid-cols-4 gap-1 rounded-full border border-border/70 bg-secondary/40 p-1"
+                  >
+                    {STOP_DRAWER_TABS.map((tab) => {
+                      const TabIcon = tab.icon;
+
+                      return (
+                        <TabsTrigger
+                          key={tab.value}
+                          value={tab.value}
+                          aria-label={tab.label}
+                          title={tab.label}
+                        >
+                          <TabIcon className="size-4" />
+                          <span className="sr-only">{tab.label}</span>
+                        </TabsTrigger>
+                      );
+                    })}
                   </TabsList>
 
-                  <TabsContent value="field" className="pt-4">
+                  <TabsContent value="summary" className="space-y-3 pt-2">
+                    <div className="rounded-2xl border border-border/80 bg-background p-4">
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="min-w-0">
+                          <p className="text-base font-semibold text-foreground">
+                            {hasLoggedVisit ? "Latest log" : "No log yet"}
+                          </p>
+                        </div>
+                        <Button
+                          type="button"
+                          size="sm"
+                          className="rounded-xl"
+                          onClick={focusSurveyForm}
+                        >
+                          {hasLoggedVisit ? "Update log" : "Start log"}
+                        </Button>
+                      </div>
+
+                      {latestSelectedReport ? (
+                        <div className="mt-4 space-y-3">
+                          <div className="grid gap-2 sm:grid-cols-3">
+                            <div className="flex items-center gap-2 rounded-full border border-border/60 bg-background/85 px-3 py-2 text-[12px] font-medium text-foreground">
+                              <Clock3 className="size-3.5 shrink-0 text-primary" />
+                              <span className="truncate">
+                                {formatReportDate(latestSelectedReport.createdAt)}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-2 rounded-full border border-border/60 bg-background/85 px-3 py-2 text-[12px] font-medium text-foreground">
+                              <Info className="size-3.5 shrink-0 text-primary" />
+                              <span className="truncate">
+                                {latestSelectedReport.contributor || "Anonymous"}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-2 rounded-full border border-border/60 bg-background/85 px-3 py-2 text-[12px] font-medium text-foreground">
+                              <Sparkles className="size-3.5 shrink-0 text-primary" />
+                              <span>{selectedSummary?.reportCount ?? 0} visits</span>
+                            </div>
+                          </div>
+
+                          <div className="grid gap-2 sm:grid-cols-2">
+                            {surveyQuestions.map((question) => (
+                              <div
+                                key={question.id}
+                                className="flex items-center gap-3 rounded-xl border border-border/60 bg-background/80 px-3 py-2"
+                                aria-label={`${question.prompt}: ${getQuestionSummaryValue(question, latestSelectedReport.answers)}`}
+                              >
+                                {getQuestionIcon(question.icon) ? (
+                                  <span className="grid size-8 shrink-0 place-items-center rounded-full bg-primary/10 text-primary">
+                                    {(() => {
+                                      const Icon = getQuestionIcon(question.icon);
+                                      return Icon ? <Icon className="size-4" /> : null;
+                                    })()}
+                                  </span>
+                                ) : null}
+                                <p className="sr-only">{question.prompt}</p>
+                                <p className="truncate text-[12px] font-medium leading-relaxed text-foreground">
+                                  {getQuestionSummaryValue(question, latestSelectedReport.answers)}
+                                </p>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="mt-4 rounded-xl border border-dashed border-border bg-background/80 p-4 text-[12px] leading-relaxed text-muted-foreground">
+                          Save a log to fill this panel.
+                        </div>
+                      )}
+                    </div>
+                  </TabsContent>
+
+                  <TabsContent value="log" className="pt-2">
                     <form
                       id="field-visit-form"
                       ref={reportFormRef}
@@ -1090,15 +1349,16 @@ export function StopMap() {
                       <div className="flex items-start justify-between gap-3">
                         <div>
                           <p className="text-sm font-semibold text-foreground">
-                            Save a field visit
+                            {hasLoggedVisit ? "Update log" : "Save a log"}
                           </p>
                           <p className="text-[12px] text-muted-foreground">
-                            Save what you can confirm, leave the rest unsure.
+                            The answer fields preload from the latest stop log. Notes, name, and date stay fresh.
                           </p>
                         </div>
                         <span
+                          aria-live="polite"
                           className={cn(
-                            "min-h-5 text-[11px] font-medium",
+                            "inline-flex min-h-5 items-center gap-1.5 text-[11px] font-medium",
                             saveError
                               ? "text-destructive"
                               : reportNotice
@@ -1110,7 +1370,14 @@ export function StopMap() {
                             ? "Saving…"
                             : saveError
                               ? saveError
-                              : reportNotice ?? "Cloud-backed"}
+                              : reportNotice ? (
+                                <>
+                                  <Check className="size-3.5" />
+                                  Saved
+                                </>
+                              ) : (
+                                "Cloud-backed"
+                              )}
                         </span>
                       </div>
 
@@ -1130,7 +1397,7 @@ export function StopMap() {
                           ) : null}
 
                           {section.questions.map((question) => {
-                            const questionNumber = QUESTION_NUMBER_BY_ID.get(question.id);
+                            const QuestionLeadIcon = getQuestionIcon(question.icon);
 
                             if (question.type === "single-choice") {
                               const currentValue = getSingleChoiceValue(question, draft.answers);
@@ -1138,9 +1405,9 @@ export function StopMap() {
                               return (
                                 <div key={question.id} className={QUESTION_CARD_CLASS}>
                                   <div className={QUESTION_PROMPT_CLASS}>
-                                    <div className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-primary/12 text-[11px] font-semibold text-primary">
-                                      {questionNumber}
-                                    </div>
+                                    {QuestionLeadIcon ? (
+                                      <QuestionLeadIcon className="mt-0.5 size-4 shrink-0 text-primary" />
+                                    ) : null}
                                     <span className="block min-w-0 text-[13px] font-semibold leading-snug text-foreground">
                                       {question.prompt}
                                     </span>
@@ -1156,7 +1423,7 @@ export function StopMap() {
                                     className="h-9 w-full rounded-xl border border-border bg-background/88 px-3 text-[12px] font-medium text-foreground outline-none transition-colors focus:border-ring"
                                   >
                                     <option value="" disabled>
-                                      Select
+                                      Select one
                                     </option>
                                     {question.options.map((option) => (
                                       <option key={option.id} value={option.id}>
@@ -1168,17 +1435,46 @@ export function StopMap() {
                               );
                             }
 
+                            if (question.type === "multi-choice") {
+                              const currentValues = getMultiChoiceValues(question, draft.answers);
+
+                              return (
+                                <div key={question.id} className={QUESTION_CARD_CLASS}>
+                                  <div className={QUESTION_PROMPT_CLASS}>
+                                    {QuestionLeadIcon ? (
+                                      <QuestionLeadIcon className="mt-0.5 size-4 shrink-0 text-primary" />
+                                    ) : null}
+                                    <span className="block min-w-0 text-[13px] font-semibold leading-snug text-foreground">
+                                      {question.prompt}
+                                    </span>
+                                  </div>
+                                  <AgencyMultiSelectField
+                                    question={question}
+                                    value={currentValues}
+                                    seed={multiChoiceDraftSeed}
+                                    onChange={(nextValues) =>
+                                      setDraft((current) => ({
+                                        ...current,
+                                        answers: setMultiChoiceAnswer(
+                                          current.answers,
+                                          question,
+                                          nextValues,
+                                        ),
+                                      }))
+                                    }
+                                  />
+                                </div>
+                              );
+                            }
+
                             const currentValue = getBooleanValue(question, draft.answers);
 
                             return (
-                              <div
-                                key={question.id}
-                                className={QUESTION_CARD_CLASS}
-                              >
+                              <div key={question.id} className={QUESTION_CARD_CLASS}>
                                 <div className={QUESTION_PROMPT_CLASS}>
-                                  <div className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-primary/12 text-[11px] font-semibold text-primary">
-                                    {questionNumber}
-                                  </div>
+                                  {QuestionLeadIcon ? (
+                                    <QuestionLeadIcon className="mt-0.5 size-4 shrink-0 text-primary" />
+                                  ) : null}
                                   <span className="block min-w-0 text-[13px] font-semibold leading-snug text-foreground">
                                     {question.prompt}
                                   </span>
@@ -1263,22 +1559,26 @@ export function StopMap() {
                         />
                       </div>
 
-                    </form>
-                    <div className="sticky bottom-0 z-10 -mx-4 mt-4 border-t border-border bg-card/96 px-4 py-3 backdrop-blur-sm md:-mx-5 md:px-5">
-                      <div className="space-y-3">
-                        <p className="text-[11px] leading-relaxed text-muted-foreground">
-                          {completedDraftQuestions} of {draftQuestionStates.length} prompts answered.
-                        </p>
-                        <Button
-                          type="submit"
-                          form="field-visit-form"
-                          disabled={isSaving || isLoadingReports}
-                          className="h-11 w-full rounded-xl bg-primary text-primary-foreground shadow-[0_10px_22px_rgba(38,127,138,0.24)] transition-[transform,box-shadow,background-color] duration-150 ease-out hover:-translate-y-0.5 hover:bg-primary/92 hover:shadow-[0_12px_26px_rgba(38,127,138,0.28)] active:translate-y-0 active:scale-[0.99]"
-                        >
-                          {isSaving ? "Saving field visit…" : "Save field visit"}
-                        </Button>
+                      <div className="sticky bottom-0 z-10 -mx-4 mt-4 border-t border-border bg-card/96 px-4 py-3 backdrop-blur-sm md:-mx-5 md:px-5">
+                        <div className="space-y-3">
+                          <p className="text-[11px] leading-relaxed text-muted-foreground">
+                            {completedDraftQuestions} of {draftQuestionStates.length} prompts answered.
+                          </p>
+                          <Button
+                            type="submit"
+                            form="field-visit-form"
+                            disabled={isSaving || isLoadingReports}
+                            className="h-11 w-full rounded-xl bg-primary text-primary-foreground shadow-[0_10px_22px_rgba(38,127,138,0.24)] transition-[transform,box-shadow,background-color] duration-150 ease-out hover:-translate-y-0.5 hover:bg-primary/92 hover:shadow-[0_12px_26px_rgba(38,127,138,0.28)] active:translate-y-0 active:scale-[0.99]"
+                          >
+                            {isSaving
+                              ? "Saving log…"
+                              : hasLoggedVisit
+                                ? "Save update"
+                                : "Save log"}
+                          </Button>
+                        </div>
                       </div>
-                    </div>
+                    </form>
                   </TabsContent>
 
                   <TabsContent value="details" className="space-y-3 pt-4">
@@ -1323,18 +1623,52 @@ export function StopMap() {
 
                     <div className="rounded-xl border border-border bg-background p-4">
                       <p className="text-[11px] font-medium text-muted-foreground">
-                        Latest survey snapshot
+                        Snapshot
                       </p>
                       {selectedSummary?.latestReport ? (
-                        <div className="mt-3 space-y-2 text-[12px] leading-relaxed text-foreground">
-                          {surveyQuestions.map((question) => (
-                            <p key={question.id}>
-                              {describeQuestionAnswer(
-                                question,
-                                selectedSummary.latestReport.answers,
-                              )}
-                            </p>
-                          ))}
+                        <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                          {surveyQuestions.map((question) => {
+                            const snapshotTone = getSnapshotTone(
+                              question,
+                              selectedSummary.latestReport.answers,
+                            );
+                            const Icon = getQuestionIcon(question.icon);
+                            const valueLabel = getQuestionSummaryValue(
+                              question,
+                              selectedSummary.latestReport.answers,
+                            );
+
+                            return (
+                              <div
+                                key={question.id}
+                                className={cn(
+                                  "flex items-center gap-2 rounded-xl border px-3 py-2",
+                                  snapshotTone.wrapperClassName,
+                                )}
+                                aria-label={`${question.prompt}: ${valueLabel}`}
+                              >
+                                {Icon ? (
+                                  <span
+                                    className={cn(
+                                      "grid size-7 shrink-0 place-items-center rounded-full",
+                                      snapshotTone.iconClassName,
+                                    )}
+                                  >
+                                    <Icon className="size-3.5" />
+                                  </span>
+                                ) : null}
+                                <p className="sr-only">{question.prompt}</p>
+                                <p
+                                  className={cn(
+                                    "truncate text-[12px] font-medium leading-relaxed",
+                                    snapshotTone.valueClassName,
+                                  )}
+                                >
+                                  {valueLabel}
+                                </p>
+                              </div>
+                            );
+                          })}
                         </div>
                       ) : (
                         <p className="mt-3 text-[12px] leading-relaxed text-muted-foreground">
@@ -1426,7 +1760,7 @@ export function StopMap() {
                     <button
                       key={stop.id}
                       type="button"
-                      onClick={() => selectStop(stop.id, { focusSurvey: true })}
+                      onClick={() => selectStop(stop.id)}
                       className={cn(
                         "group w-full rounded-xl border p-3 text-left transition-colors duration-150 ease-out",
                         isSelected

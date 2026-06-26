@@ -15,7 +15,7 @@ export type SaveReportInput = {
 };
 
 const answerColumns = surveyAttributeDefinitions.map((attribute) => attribute.id);
-const reportColumns = [
+const reportWriteColumns = [
   "id",
   "stop_id",
   "contributor",
@@ -24,7 +24,7 @@ const reportColumns = [
   "created_at",
   ...answerColumns,
 ];
-const snapshotColumns = [
+const snapshotWriteColumns = [
   "stop_id",
   "stop_name",
   "feed_stop_id",
@@ -34,18 +34,6 @@ const snapshotColumns = [
   "visited_on",
   "notes",
   "created_at",
-  "updated_at",
-  ...answerColumns,
-];
-const latestSnapshotColumns = [
-  "stop_id",
-  "stop_name",
-  "feed_stop_id",
-  "lat",
-  "lng",
-  "contributor",
-  "visited_on",
-  "notes",
   "updated_at",
   ...answerColumns,
 ];
@@ -76,21 +64,29 @@ function toDatabaseBoolean(value: boolean | null) {
 }
 
 function fromDatabaseBoolean(value: unknown): boolean | null {
-  if (value === 1 || value === "1") return true;
-  if (value === 0 || value === "0") return false;
+  if (value === 1 || value === "1" || value === true) return true;
+  if (value === 0 || value === "0" || value === false) return false;
   return null;
 }
 
-function answersToDatabaseValues(answers: SurveyAnswers) {
-  return answerColumns.map((column) => toDatabaseBoolean(answers[column] ?? null));
+function toDatabaseText(value: unknown) {
+  if (typeof value !== "string") return null;
+  const trimmed = value.trim();
+  return trimmed ? trimmed : null;
 }
 
-function rowToAnswers(row: Record<string, unknown>) {
-  return mergeSurveyAnswers(
-    Object.fromEntries(
-      answerColumns.map((column) => [column, fromDatabaseBoolean(row[column])]),
-    ),
-  );
+function answersToDatabaseValues(answers: SurveyAnswers) {
+  return surveyAttributeDefinitions.map((attribute) => {
+    const value = answers[attribute.id];
+
+    if (attribute.type === "boolean") {
+      return toDatabaseBoolean(
+        value === true ? true : value === false ? false : null,
+      );
+    }
+
+    return toDatabaseText(value);
+  });
 }
 
 function rowToReport(row: Record<string, unknown>): StopReport {
@@ -101,7 +97,7 @@ function rowToReport(row: Record<string, unknown>): StopReport {
     visitedOn: String(row.visited_on ?? ""),
     notes: String(row.notes ?? ""),
     createdAt: String(row.created_at ?? ""),
-    answers: rowToAnswers(row),
+    answers: mergeSurveyAnswers(row),
   };
 }
 
@@ -118,10 +114,7 @@ function csvValue(value: boolean | null | number | string) {
 
 export async function listReports() {
   const db = await getDatabase();
-  const statement = db.prepare(
-    `SELECT ${reportColumns.join(", ")} FROM stop_reports ORDER BY created_at DESC`,
-  );
-  const result = await statement.all<Record<string, unknown>>();
+  const result = await db.prepare(`SELECT * FROM stop_reports ORDER BY created_at DESC`).all<Record<string, unknown>>();
 
   return (result.results ?? []).map(rowToReport);
 }
@@ -178,15 +171,15 @@ export async function saveReport(input: SaveReportInput) {
   await db.batch([
     db
       .prepare(
-        `INSERT INTO stop_reports (${reportColumns.join(", ")}) VALUES (${reportColumns
+        `INSERT INTO stop_reports (${reportWriteColumns.join(", ")}) VALUES (${reportWriteColumns
           .map(() => "?")
           .join(", ")})`,
       )
       .bind(...reportValues),
     db
       .prepare(
-        `INSERT INTO stop_snapshots (${snapshotColumns.join(", ")})
-         VALUES (${snapshotColumns.map(() => "?").join(", ")})
+        `INSERT INTO stop_snapshots (${snapshotWriteColumns.join(", ")})
+         VALUES (${snapshotWriteColumns.map(() => "?").join(", ")})
          ON CONFLICT(stop_id) DO UPDATE SET
            stop_name = excluded.stop_name,
            feed_stop_id = excluded.feed_stop_id,
@@ -205,29 +198,19 @@ export async function saveReport(input: SaveReportInput) {
 }
 
 export async function exportReportsCsv() {
-  const db = await getDatabase();
-  const snapshotResult = await db
-    .prepare(
-      `SELECT ${latestSnapshotColumns.join(", ")} FROM stop_snapshots ORDER BY stop_name ASC`,
-    )
-    .all<Record<string, unknown>>();
-  const snapshotByStopId = new Map(
-    (snapshotResult.results ?? []).map((row) => [String(row.stop_id), row]),
-  );
+  const reports = await listReports();
+  const latestReportByStopId = new Map<string, StopReport>();
+
+  for (const report of reports) {
+    if (!latestReportByStopId.has(report.stopId)) {
+      latestReportByStopId.set(report.stopId, report);
+    }
+  }
 
   const header = [
     "stop_name",
     "stop_id",
-    "sign_pole",
-    "sign_shelter",
-    "sign_stand",
-    "sign_none",
-    "seating",
-    "shelter",
-    "shade",
-    "environment_bus_bay",
-    "environment_street",
-    "environment_parking_lot",
+    ...answerColumns,
     "lat",
     "lng",
     "contributor",
@@ -237,28 +220,19 @@ export async function exportReportsCsv() {
   ];
 
   const rows = stops.map((stop) => {
-    const snapshot = snapshotByStopId.get(stop.id);
-    const answers = snapshot ? rowToAnswers(snapshot) : mergeSurveyAnswers();
+    const report = latestReportByStopId.get(stop.id);
+    const answers = report?.answers ?? mergeSurveyAnswers();
 
     return [
       stop.name,
       stop.stopId || stop.id,
-      csvValue(answers.sign_pole),
-      csvValue(answers.sign_shelter),
-      csvValue(answers.sign_stand),
-      csvValue(answers.sign_none),
-      csvValue(answers.seating),
-      csvValue(answers.shelter),
-      csvValue(answers.shade),
-      csvValue(answers.environment_bus_bay),
-      csvValue(answers.environment_street),
-      csvValue(answers.environment_parking_lot),
+      ...answerColumns.map((column) => csvValue(answers[column])),
       csvValue(stop.coordinates[1]),
       csvValue(stop.coordinates[0]),
-      csvValue(String(snapshot?.contributor ?? "")),
-      csvValue(String(snapshot?.visited_on ?? "")),
-      csvValue(String(snapshot?.notes ?? "")),
-      csvValue(String(snapshot?.updated_at ?? "")),
+      csvValue(String(report?.contributor ?? "")),
+      csvValue(String(report?.visitedOn ?? "")),
+      csvValue(String(report?.notes ?? "")),
+      csvValue(String(report?.createdAt ?? "")),
     ]
       .map((value) => escapeCsvCell(String(value)))
       .join(",");

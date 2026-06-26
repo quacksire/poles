@@ -1,0 +1,2 @@
+service_id,date,holiday_name,exception_type
+c_71761_b_86226_d_31,20260703,July 4th Holiday,2

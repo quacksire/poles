@@ -8,11 +8,12 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "deploy": "npm run db:migrate && wrangler deploy",
     "preview": "astro preview",
     "astro": "astro",
     "generate-types": "wrangler types --include-runtime false",
-    "db:migrate": "wrangler d1 migrations apply poles",
-    "db:migrate:local": "wrangler d1 migrations apply poles --local"
+    "db:migrate": "wrangler d1 migrations apply DB --remote",
+    "db:migrate:local": "wrangler d1 migrations apply DB --local"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.0.0",

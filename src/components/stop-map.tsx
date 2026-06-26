@@ -6,6 +6,7 @@ import {
   useMemo,
   useRef,
   useState,
+  type CSSProperties,
   type FormEvent,
 } from "react";
 import {
@@ -26,7 +27,14 @@ import {
   X,
 } from "lucide-react";
 
-import { stopBounds, stopCenter, stops, type NormalizedStop } from "@/lib/stops";
+import {
+  feedStats,
+  stopBounds,
+  stopCenter,
+  stops,
+  type NormalizedRoute,
+  type NormalizedStop,
+} from "@/lib/stops";
 import {
   activeSurveyFilters,
   countAnsweredQuestions,
@@ -441,23 +449,60 @@ function formatReportDate(value: string) {
   }
 }
 
+function formatFeedCurrentDate(value: string) {
+  if (!value) return "Date unavailable";
+
+  const normalized = value.replace(/^UTC:\s*/, "").trim();
+  const parsed = new Date(
+    normalized.includes("UTC") ? normalized : `${normalized} UTC`,
+  );
+
+  if (Number.isNaN(parsed.getTime())) {
+    return value;
+  }
+
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  }).format(parsed);
+}
+
 function locationSummary(stop: NormalizedStop) {
-  return [stop.parentName, stop.stopDomain, stop.levelName]
+  return [
+    stop.parentName,
+    stop.locationTypeLabel !== "Stop" ? stop.locationTypeLabel : null,
+    stop.platformCode ? `Platform ${stop.platformCode}` : null,
+    stop.zoneId ? `Zone ${stop.zoneId}` : null,
+    stop.primaryAgencyName,
+  ]
     .filter(Boolean)
     .join(" • ");
 }
 
 function dataSignalLabel(stop: NormalizedStop) {
-  if (stop.wheelchairBoarding === 1) return "Boarding flagged";
-  if (stop.parentName) return "Hub-linked";
-  if (stop.stopUrl) return "Reference-linked";
-  return "Needs field visit";
+  if (!stop.isServed) return "No scheduled service";
+  if (stop.routeCount > 1) return `${stop.routeCount} routes`;
+  if (stop.wheelchairBoarding === 1) return "Accessible flag";
+  if (stop.stopUrl) return "Official reference";
+  return "Single-route stop";
 }
 
 function signalTone(stop: NormalizedStop) {
-  if (stop.wheelchairBoarding === 1) return "bg-primary/12 text-primary";
-  if (stop.parentName) return "bg-accent text-accent-foreground";
+  if (!stop.isServed) return "bg-muted text-muted-foreground";
+  if (stop.routeCount > 1) return "bg-primary/12 text-primary";
+  if (stop.wheelchairBoarding === 1) return "bg-emerald-100 text-emerald-800";
   return "bg-muted text-muted-foreground";
+}
+
+function routeChipStyle(route: NormalizedRoute): CSSProperties | undefined {
+  if (!route.color) return undefined;
+
+  return {
+    backgroundColor: route.color,
+    borderColor: route.color,
+    color: route.textColor ?? "#FFFFFF",
+  };
 }
 
 function statusTone(statusBand: SurveyStatusFilter | null | undefined) {
@@ -482,6 +527,25 @@ function crowdCoverage(reports: StopReport[]) {
     totalReports: reports.length,
     totalStops: distinctStops.size,
   };
+}
+
+function distanceBetweenCoordinates(
+  left: [number, number],
+  right: [number, number],
+) {
+  const toRadians = (value: number) => (value * Math.PI) / 180;
+  const earthRadiusKm = 6371;
+  const [leftLongitude, leftLatitude] = left;
+  const [rightLongitude, rightLatitude] = right;
+  const deltaLatitude = toRadians(rightLatitude - leftLatitude);
+  const deltaLongitude = toRadians(rightLongitude - leftLongitude);
+  const latitudeA = toRadians(leftLatitude);
+  const latitudeB = toRadians(rightLatitude);
+  const haversine =
+    Math.sin(deltaLatitude / 2) ** 2
+    + Math.cos(latitudeA) * Math.cos(latitudeB) * Math.sin(deltaLongitude / 2) ** 2;
+
+  return earthRadiusKm * 2 * Math.atan2(Math.sqrt(haversine), Math.sqrt(1 - haversine));
 }
 
 function boundsForStops(stopList: NormalizedStop[]) {
@@ -558,6 +622,45 @@ function StopMarker({
   );
 }
 
+function RouteChipRow({
+  routes,
+  limit = 3,
+}: {
+  routes: NormalizedRoute[];
+  limit?: number;
+}) {
+  if (!routes.length) {
+    return (
+      <span className="rounded-full border border-dashed border-border px-2 py-1 text-[10px] font-medium text-muted-foreground">
+        No scheduled routes
+      </span>
+    );
+  }
+
+  const visibleRoutes = routes.slice(0, limit);
+  const hiddenCount = routes.length - visibleRoutes.length;
+
+  return (
+    <>
+      {visibleRoutes.map((route) => (
+        <span
+          key={route.id}
+          className="inline-flex items-center rounded-full border px-2 py-1 text-[10px] font-semibold"
+          style={routeChipStyle(route)}
+          title={route.label}
+        >
+          {route.shortName ?? route.longName ?? route.id}
+        </span>
+      ))}
+      {hiddenCount > 0 ? (
+        <span className="inline-flex items-center rounded-full border border-border px-2 py-1 text-[10px] font-medium text-muted-foreground">
+          +{hiddenCount}
+        </span>
+      ) : null}
+    </>
+  );
+}
+
 export function StopMap() {
   const mapRef = useRef<MapRef>(null);
   const reportFormRef = useRef<HTMLFormElement>(null);
@@ -571,6 +674,8 @@ export function StopMap() {
   );
   const [selectedStopId, setSelectedStopId] = useState<string | null>(null);
   const [selectedStopTab, setSelectedStopTab] = useState("summary");
+  const [mapViewportCenter, setMapViewportCenter] =
+    useState<[number, number]>(stopCenter);
   const [searchValue, setSearchValue] = useState("");
   const deferredSearch = useDeferredValue(searchValue.trim().toLowerCase());
   const [reports, setReports] = useState<StopReport[]>([]);
@@ -647,6 +752,10 @@ export function StopMap() {
   }, [isDesktop]);
 
   const reportCoverage = useMemo(() => crowdCoverage(reports), [reports]);
+  const feedCurrentDateLabel = useMemo(
+    () => formatFeedCurrentDate(feedStats.feedVersion),
+    [],
+  );
 
   const reportSummaryByStop = useMemo(() => {
     const grouped = new Map<string, StopReport[]>();
@@ -754,6 +863,16 @@ export function StopMap() {
     reportSummaryByStop,
   ]);
 
+  const nearestStops = useMemo(() => {
+    return stops
+      .map((stop) => ({
+        stop,
+        distanceKm: distanceBetweenCoordinates(mapViewportCenter, stop.coordinates),
+      }))
+      .sort((left, right) => left.distanceKm - right.distanceKm)
+      .slice(0, 3);
+  }, [mapViewportCenter]);
+
   const selectedStop = useMemo(() => {
     if (!selectedStopId) return null;
     return stops.find((stop) => stop.id === selectedStopId) ?? null;
@@ -784,7 +903,7 @@ export function StopMap() {
     setDraft(createDraftFromReport());
     setReportNotice(null);
     setSaveError(null);
-    setSelectedStopTab("summary");
+    setSelectedStopTab("log");
     setMultiChoiceDraftSeed((current) => current + 1);
   }, [selectedStopId]);
 
@@ -840,7 +959,7 @@ export function StopMap() {
 
   function selectStop(stopId: string, options?: { focusSurvey?: boolean }) {
     focusSurveyOnSelectRef.current = Boolean(options?.focusSurvey);
-    setSelectedStopTab("summary");
+    setSelectedStopTab("log");
     setSelectedStopId(stopId);
   }
 
@@ -940,6 +1059,7 @@ export function StopMap() {
         minZoom={8}
         maxZoom={17}
         theme="light"
+        onViewportChange={(viewport) => setMapViewportCenter(viewport.center)}
         className="h-full w-full"
       >
         <MapControls />
@@ -1110,17 +1230,17 @@ export function StopMap() {
           <DrawerHeader className="border-b border-border bg-card p-3.5 !text-left md:p-5">
             {!selectedStop ? (
                 <div className="w-full">
-                  <div className="min-w-0 space-y-2.5">
+                  <div className="min-w-0 space-y-3">
                     <div className="flex items-center gap-2.5">
                   <span className="grid size-9 place-items-center rounded-xl bg-linear-to-br from-primary/16 to-primary/8 text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]">
                     <StopIcon />
                   </span>
                       <div className="min-w-0">
                         <DrawerTitle className="text-[14px] font-semibold text-foreground">
-                          Poles
+                          Project Poles
                         </DrawerTitle>
                         <DrawerDescription className="text-[11px] leading-relaxed text-muted-foreground">
-                          Drop in GTFS stop data, tap the map, save a fast field visit.
+                          {feedStats.primaryAgencyName}
                         </DrawerDescription>
                       </div>
                     </div>
@@ -1128,10 +1248,10 @@ export function StopMap() {
                     <div className="grid grid-cols-3 rounded-xl border border-border/80 bg-linear-to-r from-secondary/80 via-background to-primary/6">
                       <div className="px-3 py-2">
                         <p className="text-[9px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
-                          Not Surveyed
+                          Stop Count
                         </p>
                         <p className="mt-0.5 text-sm font-semibold text-foreground">
-                          {statusCounts.not_surveyed}
+                          {feedStats.stopCount}
                         </p>
                       </div>
                       <div className="border-x border-border/80 px-3 py-2">
@@ -1144,7 +1264,7 @@ export function StopMap() {
                       </div>
                       <div className="px-3 py-2">
                         <p className="text-[9px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
-                          Done
+                          Fully
                         </p>
                         <p className="mt-0.5 text-sm font-semibold text-foreground">
                           {statusCounts.done}
@@ -1152,22 +1272,26 @@ export function StopMap() {
                       </div>
                     </div>
 
+                    <div className="rounded-xl border border-border/80 bg-background/90 px-3 py-2.5 text-[11px] leading-relaxed text-muted-foreground">
+                      Current as of {feedCurrentDateLabel}
+                    </div>
+
                     <label className="relative block">
                       <Search className="pointer-events-none absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
                       <Input
                           value={searchValue}
                           onChange={(event) => setSearchValue(event.target.value)}
-                          placeholder="Search a stop, code, or hub"
+                          placeholder="Search stop, code, route, or agency"
                           className="h-10 rounded-xl border-border bg-background pl-9 text-[12px]"
                       />
                     </label>
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <div className="min-h-5 text-[11px] text-muted-foreground">
                         {isLoadingReports
-                            ? "Loading saved field visits…"
+                            ? "Loading visits…"
                             : loadError
                                 ? loadError
-                                : `${reportCoverage.totalReports} cloud-synced visits loaded.`}
+                                : `${reportCoverage.totalReports} visits loaded.`}
                       </div>
                       <div className="flex items-center gap-2">
                         {loadError ? (
@@ -1195,44 +1319,50 @@ export function StopMap() {
                   </div>
                 </div>
             ): (
-                <div className="space-y-3">
+                <div className="grid gap-3">
                   <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0">
+                    <div className="min-w-0 space-y-1">
                       <div className="flex flex-wrap items-center gap-2">
                         <p className="text-[1.2rem] font-semibold leading-tight text-foreground">
                           {selectedStop.name}
                         </p>
                         {selectedStop.code ? (
-                            <Badge variant="outline">Stop {selectedStop.code}</Badge>
+                          <Badge variant="outline">Stop {selectedStop.code}</Badge>
                         ) : null}
                       </div>
-                      <p className="mt-1 max-w-[48ch] text-[12px] leading-relaxed text-muted-foreground">
-                        {locationSummary(selectedStop) || selectedStop.placeName}
+                      <p className="max-w-[52ch] text-[12px] leading-relaxed text-muted-foreground">
+                        {locationSummary(selectedStop) || selectedStop.wheelchairLabel}
                       </p>
                     </div>
 
                     <Button
-                        type="button"
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => setSelectedStopId(null)}
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setSelectedStopId(null)}
                     >
                       Clear
                     </Button>
                   </div>
 
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap items-center gap-2">
                     <Badge variant="secondary" className={signalTone(selectedStop)}>
                       {dataSignalLabel(selectedStop)}
                     </Badge>
+                    <Badge variant="outline">
+                      {selectedStop.routeCount
+                        ? `${selectedStop.routeCount} serving route${selectedStop.routeCount === 1 ? "" : "s"}`
+                        : "No scheduled routes"}
+                    </Badge>
                     {selectedSummary ? (
-                        <Badge variant="outline">
-                          {selectedSummary.reportCount} saved visits
-                        </Badge>
+                      <Badge variant="outline">
+                        {selectedSummary.reportCount} saved visits
+                      </Badge>
                     ) : null}
-                    {selectedStop.stopDomain ? (
-                        <Badge variant="outline">{selectedStop.stopDomain}</Badge>
-                    ) : null}
+                  </div>
+
+                  <div className="flex flex-wrap gap-1.5">
+                    <RouteChipRow routes={selectedStop.servingRoutes} />
                   </div>
                 </div>
             )}
@@ -1271,12 +1401,10 @@ export function StopMap() {
 
                   <TabsContent value="summary" className="space-y-3 pt-2">
                     <div className="rounded-2xl border border-border/80 bg-background p-4">
-                      <div className="flex items-start justify-between gap-3">
-                        <div className="min-w-0">
-                          <p className="text-base font-semibold text-foreground">
-                            {hasLoggedVisit ? "Latest log" : "No log yet"}
-                          </p>
-                        </div>
+                      <div className="flex items-center justify-between gap-3">
+                        <p className="text-sm font-semibold text-foreground">
+                          {hasLoggedVisit ? "Latest log" : "No log yet"}
+                        </p>
                         <Button
                           type="button"
                           size="sm"
@@ -1288,51 +1416,26 @@ export function StopMap() {
                       </div>
 
                       {latestSelectedReport ? (
-                        <div className="mt-4 space-y-3">
-                          <div className="grid gap-2 sm:grid-cols-3">
-                            <div className="flex items-center gap-2 rounded-full border border-border/60 bg-background/85 px-3 py-2 text-[12px] font-medium text-foreground">
-                              <Clock3 className="size-3.5 shrink-0 text-primary" />
-                              <span className="truncate">
-                                {formatReportDate(latestSelectedReport.createdAt)}
-                              </span>
-                            </div>
-                            <div className="flex items-center gap-2 rounded-full border border-border/60 bg-background/85 px-3 py-2 text-[12px] font-medium text-foreground">
-                              <Info className="size-3.5 shrink-0 text-primary" />
-                              <span className="truncate">
-                                {latestSelectedReport.contributor || "Anonymous"}
-                              </span>
-                            </div>
-                            <div className="flex items-center gap-2 rounded-full border border-border/60 bg-background/85 px-3 py-2 text-[12px] font-medium text-foreground">
-                              <Sparkles className="size-3.5 shrink-0 text-primary" />
-                              <span>{selectedSummary?.reportCount ?? 0} visits</span>
-                            </div>
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/85 px-3 py-2 text-[12px] font-medium text-foreground">
+                            <Clock3 className="size-3.5 shrink-0 text-primary" />
+                            <span className="truncate">
+                              {formatReportDate(latestSelectedReport.createdAt)}
+                            </span>
                           </div>
-
-                          <div className="grid gap-2 sm:grid-cols-2">
-                            {surveyQuestions.map((question) => (
-                              <div
-                                key={question.id}
-                                className="flex items-center gap-3 rounded-xl border border-border/60 bg-background/80 px-3 py-2"
-                                aria-label={`${question.prompt}: ${getQuestionSummaryValue(question, latestSelectedReport.answers)}`}
-                              >
-                                {getQuestionIcon(question.icon) ? (
-                                  <span className="grid size-8 shrink-0 place-items-center rounded-full bg-primary/10 text-primary">
-                                    {(() => {
-                                      const Icon = getQuestionIcon(question.icon);
-                                      return Icon ? <Icon className="size-4" /> : null;
-                                    })()}
-                                  </span>
-                                ) : null}
-                                <p className="sr-only">{question.prompt}</p>
-                                <p className="truncate text-[12px] font-medium leading-relaxed text-foreground">
-                                  {getQuestionSummaryValue(question, latestSelectedReport.answers)}
-                                </p>
-                              </div>
-                            ))}
+                          <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/85 px-3 py-2 text-[12px] font-medium text-foreground">
+                            <Info className="size-3.5 shrink-0 text-primary" />
+                            <span className="truncate">
+                              {latestSelectedReport.contributor || "Anonymous"}
+                            </span>
+                          </div>
+                          <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/85 px-3 py-2 text-[12px] font-medium text-foreground">
+                            <Sparkles className="size-3.5 shrink-0 text-primary" />
+                            <span>{selectedSummary?.reportCount ?? 0} visits</span>
                           </div>
                         </div>
                       ) : (
-                        <div className="mt-4 rounded-xl border border-dashed border-border bg-background/80 p-4 text-[12px] leading-relaxed text-muted-foreground">
+                        <div className="mt-3 rounded-xl border border-dashed border-border bg-background/80 p-4 text-[12px] leading-relaxed text-muted-foreground">
                           Save a log to fill this panel.
                         </div>
                       )}
@@ -1437,6 +1540,7 @@ export function StopMap() {
 
                             if (question.type === "multi-choice") {
                               const currentValues = getMultiChoiceValues(question, draft.answers);
+                              const isSharedByQuestion = question.attributeId === "shared_by";
 
                               return (
                                 <div key={question.id} className={QUESTION_CARD_CLASS}>
@@ -1448,21 +1552,38 @@ export function StopMap() {
                                       {question.prompt}
                                     </span>
                                   </div>
-                                  <AgencyMultiSelectField
-                                    question={question}
-                                    value={currentValues}
-                                    seed={multiChoiceDraftSeed}
-                                    onChange={(nextValues) =>
-                                      setDraft((current) => ({
-                                        ...current,
-                                        answers: setMultiChoiceAnswer(
-                                          current.answers,
-                                          question,
-                                          nextValues,
-                                        ),
-                                      }))
-                                    }
-                                  />
+                                  <div className="grid gap-2">
+                                    {isSharedByQuestion && selectedStop ? (
+                                      <div className="rounded-xl border border-border/70 bg-background/80 px-3 py-2 text-[11px] leading-relaxed text-muted-foreground">
+                                        <span className="font-medium text-foreground">
+                                          Feed context:
+                                        </span>{" "}
+                                        {selectedStop.servingAgencies.length > 0
+                                          ? selectedStop.servingAgencies.join(", ")
+                                          : "No scheduled agencies"}{" "}
+                                        {selectedStop.servingRoutes.length > 0
+                                          ? `via ${selectedStop.servingRoutes
+                                              .map((route) => route.shortName ?? route.longName ?? route.id)
+                                              .join(", ")}.`
+                                          : "in the current GTFS feed."}
+                                      </div>
+                                    ) : null}
+                                    <AgencyMultiSelectField
+                                      question={question}
+                                      value={currentValues}
+                                      seed={multiChoiceDraftSeed}
+                                      onChange={(nextValues) =>
+                                        setDraft((current) => ({
+                                          ...current,
+                                          answers: setMultiChoiceAnswer(
+                                            current.answers,
+                                            question,
+                                            nextValues,
+                                          ),
+                                        }))
+                                      }
+                                    />
+                                  </div>
                                 </div>
                               );
                             }
@@ -1582,11 +1703,11 @@ export function StopMap() {
                   </TabsContent>
 
                   <TabsContent value="details" className="space-y-3 pt-4">
-                    <div className="rounded-xl border border-border bg-secondary/45 p-4">
+                    <div className="rounded-xl border border-border bg-secondary/30 p-4">
                       <p className="text-[11px] font-medium text-muted-foreground">
-                        Official signals
+                        Official GTFS context
                       </p>
-                      <div className="mt-3 space-y-2 text-[12px] leading-relaxed text-foreground">
+                      <div className="mt-3 grid gap-2 text-[12px] leading-relaxed text-foreground sm:grid-cols-2">
                         <div className="flex items-center gap-2">
                           <Flag className="size-3.5 text-primary" />
                           <span>{selectedStop.wheelchairLabel}</span>
@@ -1596,29 +1717,92 @@ export function StopMap() {
                           <span>
                             {selectedStop.parentName
                               ? `Parent hub: ${selectedStop.parentName}`
-                              : "Standalone stop in the dataset"}
+                              : selectedStop.locationTypeLabel === "Stop"
+                                ? "Standalone stop in the dataset"
+                                : selectedStop.locationTypeLabel}
                           </span>
                         </div>
                         <div className="flex items-center gap-2">
                           <CircleHelp className="size-3.5 text-primary" />
                           <span>
-                            {selectedStop.stopUrl
-                              ? "Feed reference link available"
-                              : "No detail link in the dataset"}
+                            {selectedStop.isServed
+                              ? `${selectedStop.routeCount} scheduled route${selectedStop.routeCount === 1 ? "" : "s"} in the current feed`
+                              : "Present in stops.txt with no scheduled service"}
                           </span>
                         </div>
                       </div>
-                      {selectedStop.stopUrl ? (
-                        <a
-                          className="mt-4 inline-flex items-center gap-1 text-[12px] font-medium text-primary transition-colors hover:text-primary/80"
-                          href={selectedStop.stopUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          Open stop reference
-                          <ArrowUpRight className="size-3.5" />
-                        </a>
-                      ) : null}
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        {selectedStop.stopUrl ? (
+                          <a
+                            className="inline-flex items-center gap-1 text-[12px] font-medium text-primary transition-colors hover:text-primary/80"
+                            href={selectedStop.stopUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            Open stop reference
+                            <ArrowUpRight className="size-3.5" />
+                          </a>
+                        ) : null}
+                        {selectedStop.timezone ? (
+                          <Badge variant="outline">{selectedStop.timezone}</Badge>
+                        ) : null}
+                        {selectedStop.direction ? (
+                          <Badge variant="outline">{selectedStop.direction}</Badge>
+                        ) : null}
+                      </div>
+                    </div>
+
+                    <div className="rounded-xl border border-border bg-background p-4">
+                      <div className="flex items-center justify-between gap-3">
+                        <p className="text-[11px] font-medium text-muted-foreground">
+                          Serving routes
+                        </p>
+                        {selectedStop.primaryAgencyName ? (
+                          <Badge variant="outline">{selectedStop.primaryAgencyName}</Badge>
+                        ) : null}
+                      </div>
+                      {selectedStop.servingRoutes.length > 0 ? (
+                        <div className="mt-3 grid gap-2">
+                          {selectedStop.servingRoutes.map((route) => (
+                            <div
+                              key={route.id}
+                              className="flex items-center justify-between gap-3 rounded-xl border border-border/70 bg-background/80 px-3 py-2"
+                            >
+                              <div className="min-w-0">
+                                <div className="flex flex-wrap items-center gap-2">
+                                  <span
+                                    className="inline-flex items-center rounded-full border px-2 py-1 text-[10px] font-semibold"
+                                    style={routeChipStyle(route)}
+                                  >
+                                    {route.shortName ?? route.id}
+                                  </span>
+                                  <p className="truncate text-[12px] font-medium text-foreground">
+                                    {route.longName ?? route.label}
+                                  </p>
+                                </div>
+                                <p className="mt-1 text-[11px] text-muted-foreground">
+                                  {[route.agencyName, route.typeLabel].filter(Boolean).join(" • ")}
+                                </p>
+                              </div>
+                              {route.url ? (
+                                <a
+                                  href={route.url}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="shrink-0 text-primary transition-colors hover:text-primary/80"
+                                  aria-label={`Open route page for ${route.label}`}
+                                >
+                                  <ArrowUpRight className="size-3.5" />
+                                </a>
+                              ) : null}
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <p className="mt-3 text-[12px] leading-relaxed text-muted-foreground">
+                          This stop is present in the feed but not referenced by any scheduled trip.
+                        </p>
+                      )}
                     </div>
 
                     <div className="rounded-xl border border-border bg-background p-4">
@@ -1730,8 +1914,8 @@ export function StopMap() {
                     Tap any stop to start the survey
                   </p>
                   <p className="mt-2 max-w-[36ch] text-[12px] leading-relaxed text-muted-foreground">
-                    Replace `stops.json`, tweak the survey config, and this same
-                    flow works for another agency without rebuilding the form by hand.
+                    Swap the extracted files in `/gtfs`, rebuild, and the feed
+                    updates for another agency.
                   </p>
                 </div>
               </section>
@@ -1741,17 +1925,17 @@ export function StopMap() {
               <div className="mb-3 flex items-center justify-between gap-3">
                 <div>
                   <p className="text-sm font-semibold text-foreground">
-                    {deferredSearch ? "Matching stops" : "Visible stops"}
+                    Nearby stops
                   </p>
                   <p className="text-[12px] text-muted-foreground">
-                    {filteredStops.length} stops match the current filters.
+                    Three nearest stops from the current map view.
                   </p>
                 </div>
                 <Badge variant="outline">{reportCoverage.totalReports} visits</Badge>
               </div>
 
               <div className="grid gap-2">
-                {filteredStops.map((stop) => {
+                {nearestStops.map(({ stop, distanceKm }) => {
                   const summary = reportSummaryByStop.get(stop.id);
                   if (!summary) return null;
                   const isSelected = stop.id === selectedStopId;
@@ -1783,6 +1967,14 @@ export function StopMap() {
                           <p className="mt-1 line-clamp-2 text-[11px] leading-relaxed text-muted-foreground">
                             {locationSummary(stop) || stop.wheelchairLabel}
                           </p>
+                          <p className="mt-1 text-[11px] text-muted-foreground">
+                            {distanceKm < 1
+                              ? `${Math.round(distanceKm * 1000)} m away`
+                              : `${distanceKm.toFixed(1)} km away`}
+                          </p>
+                          <div className="mt-2 flex flex-wrap gap-1.5">
+                            <RouteChipRow routes={stop.servingRoutes} />
+                          </div>
                         </div>
 
                         <div className="flex shrink-0 items-center gap-2">
@@ -1813,6 +2005,42 @@ export function StopMap() {
                     </button>
                   );
                 })}
+              </div>
+
+              <div className="sticky bottom-0 mt-4 border-t border-border bg-card/96 pt-4 text-[11px] text-muted-foreground backdrop-blur-sm">
+                <div className="space-y-2">
+                  <div>
+                    <a
+                      href="https://github.com/quacksire/poles"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="font-medium text-primary transition-colors hover:text-primary/80"
+                    >
+                      Source on GitHub
+                    </a>
+                    .
+                    {" "}
+                    <a
+                      href="https://github.com/quacksire/poles"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="font-medium text-primary transition-colors hover:text-primary/80"
+                    >
+                      Deploy your own
+                    </a>
+                    .
+                  </div>
+                  <div>
+                    <a
+                      href="https://samjeffs.net"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="transition-colors hover:text-foreground"
+                    >
+                      made with ♥️ in 🌉 by sam 🐱
+                    </a>
+                  </div>
+                </div>
               </div>
             </section>
           </div>

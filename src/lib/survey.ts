@@ -17,6 +17,8 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
+import { gtfsAgencies } from "@/lib/gtfs";
+
 export type SurveyStatusFilter = "not_surveyed" | "partial" | "done";
 
 export type SurveyAnswerValue = boolean | string | null;
@@ -148,8 +150,17 @@ function questionIcon(icon?: SurveyIconName) {
   return icon;
 }
 
+const sharedAgencyOptions: SurveyOption[] = [
+  ...gtfsAgencies.map((agency) => ({
+    id: agency.name,
+    label: agency.name,
+    icon: "bus_front" as const,
+  })),
+  { id: "Other", label: "Other", icon: "help" },
+];
+
 // Replace `surveySections` with your own prompts and answer ids.
-// Swap in another `stops.json`, adjust the survey config below, and the app UI will follow.
+// Swap the contents of `/gtfs`, adjust the survey config below, and the app UI will follow.
 export const surveySections: SurveySection[] = [
   {
     id: "signage",
@@ -241,12 +252,7 @@ export const surveySections: SurveySection[] = [
         filterLabel: "Shared by",
         summaryLabel: "Shared by",
         contributesToCoverage: true,
-        options: [
-          { id: "SamTrans", label: "SamTrans", icon: "bus_front", tone: "samtrans" },
-          { id: "Caltrain", label: "Caltrain", icon: "flag", tone: "caltrain" },
-          { id: "SFMTA", label: "SFMTA", icon: "map_pinned", tone: "sfmta" },
-          { id: "Other", label: "Other", icon: "help", tone: "other" },
-        ],
+        options: sharedAgencyOptions,
       },
     ],
   },

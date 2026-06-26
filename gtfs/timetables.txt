@@ -1,0 +1,41 @@
+timetable_id,route_id,direction_id,start_date,end_date,monday,tuesday,wednesday,thursday,friday,saturday,sunday,timetable_label,service_notes,direction_label,orientation,start_time,end_time
+8682,76243,0,20260103,20260630,1,1,1,1,1,0,0,Brisbane Crocker Park,Weekday,Loop,horizontal,05:00:00,11:59:00
+8683,76243,0,20260103,20260630,1,1,1,1,1,0,0,Brisbane Crocker Park,Weekday,Loop,horizontal,12:00:00,23:59:00
+8684,76234,0,20260103,20260630,1,1,1,1,1,0,0,Utah/Grand BART ,Weekday,Loop,horizontal,05:00:00,11:59:00
+8685,76234,0,20260103,20260630,1,1,1,1,1,0,0,Utah/Grand BART ,Weekday,Loop,horizontal,12:00:00,23:59:00
+8692,76228,0,20260103,20260630,1,1,1,1,1,0,0,North Foster City ,Weekday,Loop,horizontal,05:00:00,11:59:00
+8693,76228,0,20260103,20260630,1,1,1,1,1,0,0,North Foster City ,Weekday,Loop,horizontal,12:00:00,23:59:00
+8694,76242,0,20260103,20260630,1,1,1,1,1,0,0,Burlingame Bayside ,Weekday,Loop,horizontal,05:00:00,11:59:00
+8695,76242,0,20260103,20260630,1,1,1,1,1,0,0,Burlingame Bayside ,Weekday,Loop,horizontal,12:00:00,23:59:00
+8696,76223,0,20260103,20260630,1,1,1,1,1,0,0,Burlingame Point,Weekday,Loop,horizontal,05:00:00,11:59:00
+8697,76223,0,20260103,20260630,1,1,1,1,1,0,0,Burlingame Point,Weekday,Loop,horizontal,12:00:00,23:59:00
+8698,76272,0,20260103,20260630,1,1,1,1,1,0,0,Hillsdale Caltrain Commuter,Weekday,Loop,horizontal,05:00:00,11:59:00
+8699,76272,0,20260103,20260630,1,1,1,1,1,0,0,Hillsdale Caltrain Commuter,Weekday,Loop,horizontal,12:00:00,23:59:00
+8700,76273,0,20260103,20260630,1,1,1,1,1,0,0,Foster City Commuter,Weekday,Loop,horizontal,05:00:00,11:59:00
+8701,76273,0,20260103,20260630,1,1,1,1,1,0,0,Foster City Commuter,Weekday,Loop,horizontal,15:28:00,23:59:00
+8702,76274,0,20260103,20260630,1,1,1,1,1,0,0,Millbrae Burlingame Commuter,Weekday,Loop,horizontal,05:00:00,11:59:00
+8703,76274,0,20260103,20260630,1,1,1,1,1,0,0,Millbrae Burlingame Commuter,Weekday,Loop,horizontal,12:00:00,23:59:00
+8704,76235,0,20260103,20260630,1,1,1,1,1,0,0,Utah/Grand Caltrain,Weekday,Loop,horizontal,05:00:00,11:59:00
+8705,76235,0,20260103,20260630,1,1,1,1,1,0,0,Utah/Grand Caltrain,Weekday,Loop,horizontal,12:00:00,23:59:00
+8706,76231,0,20260103,20260630,1,1,1,1,1,0,0,Oyster Point Caltrain,Weekday,Loop,horizontal,05:00:00,11:59:00
+8707,76231,0,20260103,20260630,1,1,1,1,1,0,0,Oyster Point Caltrain,Weekday,Loop,horizontal,12:00:00,23:59:00
+8708,76233,0,20260103,20260630,1,1,1,1,1,0,0,Seaport Centre,Weekday,Loop,horizontal,05:00:00,11:59:00
+8709,76233,0,20260103,20260630,1,1,1,1,1,0,0,Seaport Centre,Weekday,Loop,horizontal,12:00:00,23:59:00
+8710,76226,0,20260103,20260630,1,1,1,1,1,0,0,Redwood City Midpoint ,Weekday,Loop,horizontal,05:00:00,11:59:00
+8711,76226,0,20260103,20260630,1,1,1,1,1,0,0,Redwood City Midpoint ,Weekday,Loop,horizontal,12:00:00,23:59:00
+8712,76241,0,20260103,20260630,1,1,1,1,1,0,0,Redwood LIFE Caltrain,Weekday,Loop,horizontal,05:00:00,11:59:00
+8713,76241,0,20260103,20260630,1,1,1,1,1,0,0,Redwood LIFE Caltrain,Weekday,Loop,horizontal,12:00:00,23:59:00
+8714,76230,0,20260103,20260630,1,1,1,1,1,0,0,Oyster Point BART ,Weekday,Loop,horizontal,05:00:00,11:59:00
+8715,76230,0,20260103,20260630,1,1,1,1,1,0,0,Oyster Point BART ,Weekday,Loop,horizontal,12:00:00,23:59:00
+8716,76287,1,20260103,20260630,1,1,1,1,1,0,0,Daly City Bayshore,Weekday,East,horizontal,,
+8717,76287,0,20260103,20260630,1,1,1,1,1,0,0,Daly City Bayshore,Weekday,West,horizontal,,
+8718,76286,0,20260103,20260630,1,1,1,1,1,0,0,Marsh Road ,Weekday,Loop,horizontal,06:00:00,11:00:00
+8719,76286,0,20260103,20260630,1,1,1,1,1,0,0,Marsh Road ,Weekday,Loop,horizontal,12:00:00,23:59:00
+8720,76285,0,20260103,20260630,1,1,1,1,1,0,0,Willow Road,Weekday,Loop,horizontal,06:00:00,11:00:00
+8721,76285,0,20260103,20260630,1,1,1,1,1,0,0,Willow Road,Weekday,Loop,horizontal,12:00:00,23:59:00
+8722,76284,1,20260103,20260630,1,1,1,1,1,0,0,Crosstown,Weekday,Inbound,horizontal,,
+8723,76284,0,20260103,20260630,1,1,1,1,1,0,0,Crosstown,Weekday,Outbound,horizontal,,
+8724,76290,0,20260103,20260630,1,1,1,1,1,0,0,Skyline College Express,Weekday,No direction,horizontal,07:00:00,12:15:00
+8725,76290,0,20260103,20260630,1,1,1,1,1,0,0,Skyline College Express,Weekday,No direction,horizontal,12:55:00,19:00:00
+8754,76232,0,20260309,20260630,1,1,1,1,1,0,0,Oyster Point Ferry ,Weekday,Loop,horizontal,05:00:00,11:59:00
+8755,76232,0,20260309,20260630,1,1,1,1,1,0,0,Oyster Point Ferry ,Weekday,Loop,horizontal,12:00:00,23:59:00

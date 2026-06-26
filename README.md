@@ -1,43 +1,73 @@
-# Astro Starter Kit: Minimal
+# Poles
 
-```sh
-npm create astro@latest -- --template minimal
-```
+A GTFS-first stop survey template for transit agencies, advocates, and ops teams.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Drop the contents of an agency's `gtfs.zip` into [`gtfs/`](./gtfs), rebuild, and Poles will:
 
-## 🚀 Project Structure
+- derive the stop map from `stops.txt`
+- attach serving routes and agencies from `routes.txt`, `trips.txt`, and `stop_times.txt`
+- show feed metadata in the UI
+- auto-seed/upsert the current stop inventory into D1 before reports are read or written
 
-Inside of your Astro project, you'll see the following folders and files:
+The current repo is wired to the `commute.org` feed that is already checked in.
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/quacksire/poles)
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+The button is the main deploy path. Cloudflare can provision the app and its D1 binding from `wrangler.jsonc`, then run the deploy script.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## GTFS contract
 
-Any static assets, like images, can be placed in the `public/` directory.
+Poles expects extracted GTFS text files in `gtfs/`.
 
-## 🧞 Commands
+Required files:
 
-All commands are run from the root of the project, from a terminal:
+- `agency.txt`
+- `routes.txt`
+- `stops.txt`
+- `trips.txt`
+- `stop_times.txt`
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+Optional but used when present:
 
-## 👀 Want to learn more?
+- `feed_info.txt`
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Every other GTFS file can stay in the folder without any extra configuration.
+
+## Local development
+
+1. Replace the contents of `gtfs/` with another agency's extracted GTFS files when you want to retarget the app.
+2. Install dependencies with `npm install`.
+3. Apply local D1 migrations with `npm run db:migrate:local`.
+4. Start Astro in background mode with `astro dev --background`.
+5. Check the server with `astro dev status` and logs with `astro dev logs`.
+
+When the app starts hitting `/api/reports`, it will sync the current GTFS-derived stop inventory into D1 automatically.
+
+## What changes when you swap feeds
+
+You do not need to hand-maintain any stop inventory file in `src/lib`.
+
+Poles rebuilds these from GTFS automatically:
+
+- stop coordinates, names, codes, and URLs
+- scheduled serving routes per stop
+- serving agencies per stop
+- feed-level title, version, and service window
+- searchable stop metadata used by the map drawer
+
+The survey questions stay generic, while the official context becomes feed-specific.
+
+## Cloudflare deploy notes
+
+The deploy button should handle the template flow for a fresh account. Because this app needs D1, make sure the `DB` binding stays in `wrangler.jsonc` and that the deploy script runs migrations by binding name.
+
+If you are not deploying through the button, you may still need to create or bind the database manually before running `npm run db:migrate`.
+
+After the initial deploy, GTFS swaps should only require replacing the files in `gtfs/` and redeploying.
+
+## Scripts
+
+- `npm run build` builds the Astro worker bundle.
+- `npm run deploy` builds and deploys with Wrangler.
+- `npm run db:migrate` applies D1 migrations to the remote `DB` binding.
+- `npm run db:migrate:local` applies D1 migrations to the local `DB` binding.

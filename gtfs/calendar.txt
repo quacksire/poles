@@ -1,0 +1,2 @@
+service_id,service_name,monday,tuesday,wednesday,thursday,friday,saturday,sunday,start_date,end_date
+c_71761_b_86226_d_31,2026 Regular Schedule - Current (Weekday),1,1,1,1,1,0,0,20260307,20270101

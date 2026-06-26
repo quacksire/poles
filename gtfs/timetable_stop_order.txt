@@ -1,0 +1,491 @@
+timetable_id,stop_id,stop_sequence,stop_name,connected_routes
+8682,4208884,1,Balboa Park BART (Geneva/Delano),"BCP Shuttle/Brisbane Crocker Park, DCB Shuttle/Daly City Bayshore"
+8682,4208909,2,Bayshore & Blanken,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8682,4208907,3,Bayshore Caltrain Station,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8682,4208893,4,140 Valley,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8682,4208894,5,240 Valley,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8682,4208895,6,380 Valley,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8682,4208896,7,422 Valley,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8682,4208994,8,440 Valley,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8682,4208897,9,460 Valley,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8682,4208898,10,480 Valley,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8682,4208899,11,W. Hill Dr. & W. Hill PL,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8682,4208900,12,150 West Hill Pl.,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8682,4208901,13,175 South Hill,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8682,4208866,14,155 South Hill,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8682,4208903,15,101 South Hill,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8682,4208902,16,99 South Hill,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8682,4208886,17,Bayshore & Guadalupe,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8682,4208843,18,Old County / Bayshore,BCP Shuttle/Brisbane Crocker Park
+8682,4208887,19,Old County / San Francisco (USPS Office),"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8682,4208888,20,San Bruno / Mendocino,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8682,4208889,21,San Bruno / Alvarado,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8682,4208890,22,San Bruno / Glen Park Way,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8682,4208891,23,3745 Bayshore,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8682,4208892,24,Bayshore & Tunnel,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8682,4208904,25,Tunnel & Recycle (Bayshore Caltrain),BCP Shuttle/Brisbane Crocker Park
+8682,4208884,26,Balboa Park BART (Geneva/Delano),"BCP Shuttle/Brisbane Crocker Park, DCB Shuttle/Daly City Bayshore"
+8683,4208884,1,Balboa Park BART (Geneva/Delano),"BCP Shuttle/Brisbane Crocker Park, DCB Shuttle/Daly City Bayshore"
+8683,4208907,2,Bayshore Caltrain Station,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8683,4208843,3,Old County / Bayshore,BCP Shuttle/Brisbane Crocker Park
+8683,4208887,4,Old County / San Francisco (USPS Office),"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8683,4208888,5,San Bruno / Mendocino,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8683,4208889,6,San Bruno / Alvarado,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8683,4208890,7,San Bruno / Glen Park Way,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8683,4208891,8,3745 Bayshore,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8683,4208892,9,Bayshore & Tunnel,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8683,4208893,10,140 Valley,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8683,4208894,11,240 Valley,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8683,4208895,12,380 Valley,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8683,4208896,13,422 Valley,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8683,4208994,14,440 Valley,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8683,4208897,15,460 Valley,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8683,4208898,16,480 Valley,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8683,4208899,17,W. Hill Dr. & W. Hill PL,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8683,4208900,18,150 West Hill Pl.,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8683,4208901,19,175 South Hill,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8683,4208866,20,155 South Hill,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8683,4208903,21,101 South Hill,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8683,4208902,22,99 South Hill,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8683,4208886,23,Bayshore & Guadalupe,"BBC Shuttle/Brisbane/Bayshore Caltrain, BCP Shuttle/Brisbane Crocker Park"
+8683,4208904,24,Tunnel & Recycle (Bayshore Caltrain),BCP Shuttle/Brisbane Crocker Park
+8683,4208839,25,Tunnel & Blanken,BCP Shuttle/Brisbane Crocker Park
+8683,4208884,26,Balboa Park BART (Geneva/Delano),"BCP Shuttle/Brisbane Crocker Park, DCB Shuttle/Daly City Bayshore"
+8684,4208868,1,"South San Francisco BART (UGB/OTP, Bay #6)","OTP Shuttle/One Tower Place , UGB Shuttle/Utah/Grand BART "
+8684,4208718,2,701 Gateway Blvd.,"OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART "
+8684,4208921,3,169 Harbor Way (AM Only),"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8684,4208922,4,230 E. Grand Ave. (AM Only),"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8684,4208923,5,Kimball & E. Grand Ave.,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8684,4208924,6,390 Swift Ave.,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8684,4208929,7,400/450 E. Jamie Court,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8684,4208719,8,201 Haskins Way,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8684,4208925,9,475 E. Grand Ave.,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8684,4208926,10,Cabot/Allerton Ave.,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8684,4208927,11,349 Littlefield Ave. (AM Only),"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8684,4208928,12,SSF Conference Center,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8684,4208868,13,"South San Francisco BART (UGB/OTP, Bay #6)","OTP Shuttle/One Tower Place , UGB Shuttle/Utah/Grand BART "
+8685,4208868,1,"South San Francisco BART (UGB/OTP, Bay #6)","OTP Shuttle/One Tower Place , UGB Shuttle/Utah/Grand BART "
+8685,4208928,2,SSF Conference Center,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8685,4208842,3,380 Littlefield Ave. (PM Only),"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8685,4208923,4,Kimball & E. Grand Ave.,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8685,4208924,5,390 Swift Ave.,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8685,4208929,6,400/450 E. Jamie Court,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8685,4208719,7,201 Haskins Way,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8685,4208925,8,475 E. Grand Ave.,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8685,4208926,9,Cabot/Allerton Ave.,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8685,4251853,10,E. Grand & Pointe Grand,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8685,4208840,11,213 E. Grand Ave. (PM Only),"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8685,4208717,12,1000 Gateway Blvd.,"OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART "
+8685,4208868,13,"South San Francisco BART (UGB/OTP, Bay #6)","OTP Shuttle/One Tower Place , UGB Shuttle/Utah/Grand BART "
+8692,4208933,1,Millbrae Intermodal Station (East),"BAY Shuttle/Burlingame Bayside , BPT Shuttle/Burlingame Point, NFC Shuttle/North Foster City "
+8692,4209064,2,E. 3rd Ave & S. Norfolk (SE Corner) ,NFC Shuttle/North Foster City 
+8692,4208970,3,300-310 Lakeside,"FCC Shuttle/Foster City Commuter, LC Shuttle/Lincoln Centre, NFC Shuttle/North Foster City "
+8692,4242117,5,1149 Chess Drive,NFC Shuttle/North Foster City 
+8692,4208972,6,200 Lincoln Centre,"FCC Shuttle/Foster City Commuter, LC Shuttle/Lincoln Centre, NFC Shuttle/North Foster City "
+8692,4208973,7,E. 3rd Ave. & Lincoln Centre,"LC Shuttle/Lincoln Centre, NFC Shuttle/North Foster City "
+8692,4242118,8,Cul-de-Sac (4000/4001 E. 3rd Ave.),NFC Shuttle/North Foster City 
+8692,4208977,9,Bridgepointe Circle & Bridgepointe Pkwy (AM Only),NFC Shuttle/North Foster City 
+8692,4208933,10,Millbrae Intermodal Station (East),"BAY Shuttle/Burlingame Bayside , BPT Shuttle/Burlingame Point, NFC Shuttle/North Foster City "
+8693,4208933,1,Millbrae Intermodal Station (East),"BAY Shuttle/Burlingame Bayside , BPT Shuttle/Burlingame Point, NFC Shuttle/North Foster City "
+8693,4243136,2,Bridgepointe Pkwy & Chess Dr (PM Only) ,NFC Shuttle/North Foster City 
+8693,4242117,3,1149 Chess Drive,NFC Shuttle/North Foster City 
+8693,4208972,4,200 Lincoln Centre,"FCC Shuttle/Foster City Commuter, LC Shuttle/Lincoln Centre, NFC Shuttle/North Foster City "
+8693,4208973,5,E. 3rd Ave. & Lincoln Centre,"LC Shuttle/Lincoln Centre, NFC Shuttle/North Foster City "
+8693,4242118,6,Cul-de-Sac (4000/4001 E. 3rd Ave.),NFC Shuttle/North Foster City 
+8693,4208969,7,353 Lakeside,LC Shuttle/Lincoln Centre
+8693,4208970,8,300-310 Lakeside,"FCC Shuttle/Foster City Commuter, LC Shuttle/Lincoln Centre, NFC Shuttle/North Foster City "
+8693,4209065,9,E. 3rd Ave & S. Norfolk (NE Corner) ,NFC Shuttle/North Foster City 
+8693,4208933,10,Millbrae Intermodal Station (East),"BAY Shuttle/Burlingame Bayside , BPT Shuttle/Burlingame Point, NFC Shuttle/North Foster City "
+8694,4208933,1,Millbrae Intermodal Station (East),"BAY Shuttle/Burlingame Bayside , BPT Shuttle/Burlingame Point, NFC Shuttle/North Foster City "
+8694,4208934,2,1649 Adrian Road,BAY Shuttle/Burlingame Bayside 
+8694,4208935,3,David/Rollins,BAY Shuttle/Burlingame Bayside 
+8694,4208936,4,1600 Rollins Road,BAY Shuttle/Burlingame Bayside 
+8694,4208937,5,Rollins/Guittard,BAY Shuttle/Burlingame Bayside 
+8694,4208938,6,1799 Old Bayshore Hwy (AM Only),BAY Shuttle/Burlingame Bayside 
+8694,4208939,7,Bayshore/Hinckley,BAY Shuttle/Burlingame Bayside 
+8694,4208940,8,1333 Bayshore Hwy (AM Only),BAY Shuttle/Burlingame Bayside 
+8694,4208933,9,Millbrae Intermodal Station (East),"BAY Shuttle/Burlingame Bayside , BPT Shuttle/Burlingame Point, NFC Shuttle/North Foster City "
+8695,4208933,1,Millbrae Intermodal Station (East),"BAY Shuttle/Burlingame Bayside , BPT Shuttle/Burlingame Point, NFC Shuttle/North Foster City "
+8695,4208946,2,1350 Bayshore Hwy (PM Only),BAY Shuttle/Burlingame Bayside 
+8695,4208947,3,1600 Bayshore Hwy (PM Only),BAY Shuttle/Burlingame Bayside 
+8695,4208948,4,1800 Old Bayshore Hwy (PM),BAY Shuttle/Burlingame Bayside 
+8695,4208934,5,1649 Adrian Road,BAY Shuttle/Burlingame Bayside 
+8695,4208935,6,David/Rollins,BAY Shuttle/Burlingame Bayside 
+8695,4208936,7,1600 Rollins Road,BAY Shuttle/Burlingame Bayside 
+8695,4208937,8,Rollins/Guittard,BAY Shuttle/Burlingame Bayside 
+8695,4208933,9,Millbrae Intermodal Station (East),"BAY Shuttle/Burlingame Bayside , BPT Shuttle/Burlingame Point, NFC Shuttle/North Foster City "
+8696,4208933,1,Millbrae Intermodal Station (East),"BAY Shuttle/Burlingame Bayside , BPT Shuttle/Burlingame Point, NFC Shuttle/North Foster City "
+8696,4208838,2,322 Airport Blvd. (BUR 102),BPT Shuttle/Burlingame Point
+8696,4208942,3,Airport/Bayview,BPT Shuttle/Burlingame Point
+8696,4208943,4,600 Airport Blvd.,BPT Shuttle/Burlingame Point
+8696,4208944,5,700 Airport Blvd.,BPT Shuttle/Burlingame Point
+8696,4208945,6,800 Airport Blvd.,BPT Shuttle/Burlingame Point
+8696,4208933,7,Millbrae Intermodal Station (East),"BAY Shuttle/Burlingame Bayside , BPT Shuttle/Burlingame Point, NFC Shuttle/North Foster City "
+8697,4208933,1,Millbrae Intermodal Station (East),"BAY Shuttle/Burlingame Bayside , BPT Shuttle/Burlingame Point, NFC Shuttle/North Foster City "
+8697,4208838,2,322 Airport Blvd. (BUR 102),BPT Shuttle/Burlingame Point
+8697,4208942,3,Airport/Bayview,BPT Shuttle/Burlingame Point
+8697,4208943,4,600 Airport Blvd.,BPT Shuttle/Burlingame Point
+8697,4208944,5,700 Airport Blvd.,BPT Shuttle/Burlingame Point
+8697,4208945,6,800 Airport Blvd.,BPT Shuttle/Burlingame Point
+8697,4208933,7,Millbrae Intermodal Station (East),"BAY Shuttle/Burlingame Bayside , BPT Shuttle/Burlingame Point, NFC Shuttle/North Foster City "
+8698,4208876,1,Hillsdale Caltrain Station,"CAM Shuttle/Campus Drive , FCC Shuttle/Foster City Commuter, HCC Shuttle/Hillsdale Caltrain Commuter, LC Shuttle/Lincoln Centre, MAR Shuttle/Mariners' Island "
+8698,4209722,2,Saratoga Dr & Park Pl,HCC Shuttle/Hillsdale Caltrain Commuter
+8698,4254399,3,1400 Fashion Island Blvd. ,HCC Shuttle/Hillsdale Caltrain Commuter
+8698,4208844,4,Mariners' Island & Fashion Island Blvd,"HCC Shuttle/Hillsdale Caltrain Commuter, LC Shuttle/Lincoln Centre"
+8698,4208968,5,Mariners' Island & Armada Way,"HCC Shuttle/Hillsdale Caltrain Commuter, LC Shuttle/Lincoln Centre"
+8698,4254401,6,2207 Bridgepointe Pkwy. ,HCC Shuttle/Hillsdale Caltrain Commuter
+8698,4208876,7,Hillsdale Caltrain Station,"CAM Shuttle/Campus Drive , FCC Shuttle/Foster City Commuter, HCC Shuttle/Hillsdale Caltrain Commuter, LC Shuttle/Lincoln Centre, MAR Shuttle/Mariners' Island "
+8699,4208876,1,Hillsdale Caltrain Station,"CAM Shuttle/Campus Drive , FCC Shuttle/Foster City Commuter, HCC Shuttle/Hillsdale Caltrain Commuter, LC Shuttle/Lincoln Centre, MAR Shuttle/Mariners' Island "
+8699,4254399,2,1400 Fashion Island Blvd. ,HCC Shuttle/Hillsdale Caltrain Commuter
+8699,4208844,3,Mariners' Island & Fashion Island Blvd,"HCC Shuttle/Hillsdale Caltrain Commuter, LC Shuttle/Lincoln Centre"
+8699,4208968,4,Mariners' Island & Armada Way,"HCC Shuttle/Hillsdale Caltrain Commuter, LC Shuttle/Lincoln Centre"
+8699,4254401,5,2207 Bridgepointe Pkwy. ,HCC Shuttle/Hillsdale Caltrain Commuter
+8699,4254402,6,Saratoga Dr & Yates Way,HCC Shuttle/Hillsdale Caltrain Commuter
+8699,4208876,7,Hillsdale Caltrain Station,"CAM Shuttle/Campus Drive , FCC Shuttle/Foster City Commuter, HCC Shuttle/Hillsdale Caltrain Commuter, LC Shuttle/Lincoln Centre, MAR Shuttle/Mariners' Island "
+8700,4208876,1,Hillsdale Caltrain Station,"CAM Shuttle/Campus Drive , FCC Shuttle/Foster City Commuter, HCC Shuttle/Hillsdale Caltrain Commuter, LC Shuttle/Lincoln Centre, MAR Shuttle/Mariners' Island "
+8700,4208879,2,Shell & E. Hillsdale Blvd.,"FCC Shuttle/Foster City Commuter, MAR Shuttle/Mariners' Island "
+8700,4208881,3,393 Vintage Park Dr (AM Only) ,"FCC Shuttle/Foster City Commuter, MAR Shuttle/Mariners' Island "
+8700,4208969,4,353 Lakeside,LC Shuttle/Lincoln Centre
+8700,4208970,5,300-310 Lakeside,"FCC Shuttle/Foster City Commuter, LC Shuttle/Lincoln Centre, NFC Shuttle/North Foster City "
+8700,4208971,6,303 Velocity Way,"FCC Shuttle/Foster City Commuter, LC Shuttle/Lincoln Centre"
+8700,4208972,7,200 Lincoln Centre,"FCC Shuttle/Foster City Commuter, LC Shuttle/Lincoln Centre, NFC Shuttle/North Foster City "
+8700,4208880,8,The Plaza at Triton Park,"FCC Shuttle/Foster City Commuter, MAR Shuttle/Mariners' Island "
+8700,4208883,9,One Hundred Grand,"FCC Shuttle/Foster City Commuter, MAR Shuttle/Mariners' Island "
+8700,4208876,10,Hillsdale Caltrain Station,"CAM Shuttle/Campus Drive , FCC Shuttle/Foster City Commuter, HCC Shuttle/Hillsdale Caltrain Commuter, LC Shuttle/Lincoln Centre, MAR Shuttle/Mariners' Island "
+8701,4208876,1,Hillsdale Caltrain Station,"CAM Shuttle/Campus Drive , FCC Shuttle/Foster City Commuter, HCC Shuttle/Hillsdale Caltrain Commuter, LC Shuttle/Lincoln Centre, MAR Shuttle/Mariners' Island "
+8701,4208880,2,The Plaza at Triton Park,"FCC Shuttle/Foster City Commuter, MAR Shuttle/Mariners' Island "
+8701,4208883,3,One Hundred Grand,"FCC Shuttle/Foster City Commuter, MAR Shuttle/Mariners' Island "
+8701,4208879,4,Shell & E. Hillsdale Blvd.,"FCC Shuttle/Foster City Commuter, MAR Shuttle/Mariners' Island "
+8701,4208972,5,200 Lincoln Centre,"FCC Shuttle/Foster City Commuter, LC Shuttle/Lincoln Centre, NFC Shuttle/North Foster City "
+8701,4208969,6,353 Lakeside,LC Shuttle/Lincoln Centre
+8701,4208970,7,300-310 Lakeside,"FCC Shuttle/Foster City Commuter, LC Shuttle/Lincoln Centre, NFC Shuttle/North Foster City "
+8701,4208971,8,303 Velocity Way,"FCC Shuttle/Foster City Commuter, LC Shuttle/Lincoln Centre"
+8701,4242119,9,378 Vintage Park Dr (PM Only) ,FCC Shuttle/Foster City Commuter
+8701,4208876,10,Hillsdale Caltrain Station,"CAM Shuttle/Campus Drive , FCC Shuttle/Foster City Commuter, HCC Shuttle/Hillsdale Caltrain Commuter, LC Shuttle/Lincoln Centre, MAR Shuttle/Mariners' Island "
+8702,4208869,1,Millbrae Intermodal Station (West),"MBC Shuttle/Millbrae Burlingame Commuter, MB Shuttle/Millbrae Broadway, NB Shuttle/North Burlingame"
+8702,4208870,2,Mills-Peninsula Health Services,"MBC Shuttle/Millbrae Burlingame Commuter, NB Shuttle/North Burlingame"
+8702,4208871,3,Adeline & Balboa,"MBC Shuttle/Millbrae Burlingame Commuter, NB Shuttle/North Burlingame"
+8702,4208872,4,Adeline & Bernal,"MBC Shuttle/Millbrae Burlingame Commuter, NB Shuttle/North Burlingame"
+8702,4208873,5,Sisters of Mercy,"MBC Shuttle/Millbrae Burlingame Commuter, NB Shuttle/North Burlingame"
+8702,4208874,6,Adeline & Bernal,"MBC Shuttle/Millbrae Burlingame Commuter, NB Shuttle/North Burlingame"
+8702,4208875,7,Adeline & Balboa,"MBC Shuttle/Millbrae Burlingame Commuter, NB Shuttle/North Burlingame"
+8702,4208848,8,Broadway Caltrain Station,"MBC Shuttle/Millbrae Burlingame Commuter, MB Shuttle/Millbrae Broadway"
+8702,4208869,9,Millbrae Intermodal Station (West),"MBC Shuttle/Millbrae Burlingame Commuter, MB Shuttle/Millbrae Broadway, NB Shuttle/North Burlingame"
+8703,4208869,1,Millbrae Intermodal Station (West),"MBC Shuttle/Millbrae Burlingame Commuter, MB Shuttle/Millbrae Broadway, NB Shuttle/North Burlingame"
+8703,4209721,2,California Dr & Broadway (PM Only) ,MBC Shuttle/Millbrae Burlingame Commuter
+8703,4208871,3,Adeline & Balboa,"MBC Shuttle/Millbrae Burlingame Commuter, NB Shuttle/North Burlingame"
+8703,4208872,4,Adeline & Bernal,"MBC Shuttle/Millbrae Burlingame Commuter, NB Shuttle/North Burlingame"
+8703,4208873,5,Sisters of Mercy,"MBC Shuttle/Millbrae Burlingame Commuter, NB Shuttle/North Burlingame"
+8703,4208874,6,Adeline & Bernal,"MBC Shuttle/Millbrae Burlingame Commuter, NB Shuttle/North Burlingame"
+8703,4208875,7,Adeline & Balboa,"MBC Shuttle/Millbrae Burlingame Commuter, NB Shuttle/North Burlingame"
+8703,4208870,8,Mills-Peninsula Health Services,"MBC Shuttle/Millbrae Burlingame Commuter, NB Shuttle/North Burlingame"
+8703,4208869,9,Millbrae Intermodal Station (West),"MBC Shuttle/Millbrae Burlingame Commuter, MB Shuttle/Millbrae Broadway, NB Shuttle/North Burlingame"
+8704,4208930,1,South San Francisco Caltrain,"OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry , OTP Shuttle/One Tower Place , UGC Shuttle/Utah/Grand Caltrain"
+8704,4208921,2,169 Harbor Way (AM Only),"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8704,4208922,3,230 E. Grand Ave. (AM Only),"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8704,4208923,4,Kimball & E. Grand Ave.,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8704,4208924,5,390 Swift Ave.,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8704,4208929,6,400/450 E. Jamie Court,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8704,4208719,7,201 Haskins Way,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8704,4208925,8,475 E. Grand Ave.,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8704,4208926,9,Cabot/Allerton Ave.,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8704,4208927,10,349 Littlefield Ave. (AM Only),"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8704,4208928,11,SSF Conference Center,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8704,4208930,12,South San Francisco Caltrain,"OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry , OTP Shuttle/One Tower Place , UGC Shuttle/Utah/Grand Caltrain"
+8705,4208930,1,South San Francisco Caltrain,"OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry , OTP Shuttle/One Tower Place , UGC Shuttle/Utah/Grand Caltrain"
+8705,4208928,2,SSF Conference Center,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8705,4208842,3,380 Littlefield Ave. (PM Only),"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8705,4208923,4,Kimball & E. Grand Ave.,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8705,4208924,5,390 Swift Ave.,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8705,4208929,6,400/450 E. Jamie Court,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8705,4208719,7,201 Haskins Way,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8705,4208925,8,475 E. Grand Ave.,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8705,4208926,9,Cabot/Allerton Ave.,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8705,4251853,10,E. Grand & Pointe Grand,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8705,4208840,11,213 E. Grand Ave. (PM Only),"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8705,4208930,12,South San Francisco Caltrain,"OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry , OTP Shuttle/One Tower Place , UGC Shuttle/Utah/Grand Caltrain"
+8706,4208930,1,South San Francisco Caltrain,"OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry , OTP Shuttle/One Tower Place , UGC Shuttle/Utah/Grand Caltrain"
+8706,4208717,2,1000 Gateway Blvd.,"OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART "
+8706,4208912,3,1120 Veterans Blvd.,"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry "
+8706,4208911,4,The Cove,"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry "
+8706,4208913,5,220 Oyster Point,"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain"
+8706,4208914,6,200 Oyster Point,"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain"
+8706,4208915,7,Oyster Point Blvd / Eccles (EB),"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry "
+8706,4208720,8,352 Oyster Point,"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry "
+8706,4208917,9,Cul-de-Sac (395/400 Oyster Point Blvd),"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry "
+8706,4208930,10,South San Francisco Caltrain,"OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry , OTP Shuttle/One Tower Place , UGC Shuttle/Utah/Grand Caltrain"
+8707,4208930,1,South San Francisco Caltrain,"OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry , OTP Shuttle/One Tower Place , UGC Shuttle/Utah/Grand Caltrain"
+8707,4208836,2,Oyster Point Blvd / Gateway,"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain"
+8707,4208913,3,220 Oyster Point,"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain"
+8707,4208914,4,200 Oyster Point,"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain"
+8707,4208915,5,Oyster Point Blvd / Eccles (EB),"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry "
+8707,4208720,6,352 Oyster Point,"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry "
+8707,4208917,7,Cul-de-Sac (395/400 Oyster Point Blvd),"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry "
+8707,4208912,8,1120 Veterans Blvd.,"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry "
+8707,4208911,9,The Cove,"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry "
+8707,4208718,10,701 Gateway Blvd.,"OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART "
+8707,4208930,11,South San Francisco Caltrain,"OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry , OTP Shuttle/One Tower Place , UGC Shuttle/Utah/Grand Caltrain"
+8708,4208979,1,Redwood City Caltrain Station,"MPT Shuttle/Redwood City Midpoint , SEA Shuttle/Seaport Centre"
+8708,4208995,2,Maple & Blomquist,SEA Shuttle/Seaport Centre
+8708,4208980,3,Chesapeake,SEA Shuttle/Seaport Centre
+8708,4208981,4,100 Cardinal Way,SEA Shuttle/Seaport Centre
+8708,4208982,5,Saginaw (Cul-de-Sac),SEA Shuttle/Seaport Centre
+8708,4208983,6,Galveston,SEA Shuttle/Seaport Centre
+8708,4244394,7,Blomquist & Maple ,SEA Shuttle/Seaport Centre
+8708,4208979,8,Redwood City Caltrain Station,"MPT Shuttle/Redwood City Midpoint , SEA Shuttle/Seaport Centre"
+8709,4208979,1,Redwood City Caltrain Station,"MPT Shuttle/Redwood City Midpoint , SEA Shuttle/Seaport Centre"
+8709,4208995,2,Maple & Blomquist,SEA Shuttle/Seaport Centre
+8709,4208980,3,Chesapeake,SEA Shuttle/Seaport Centre
+8709,4208981,4,100 Cardinal Way,SEA Shuttle/Seaport Centre
+8709,4208982,5,Saginaw (Cul-de-Sac),SEA Shuttle/Seaport Centre
+8709,4208983,6,Galveston,SEA Shuttle/Seaport Centre
+8709,4244394,7,Blomquist & Maple ,SEA Shuttle/Seaport Centre
+8709,4208979,8,Redwood City Caltrain Station,"MPT Shuttle/Redwood City Midpoint , SEA Shuttle/Seaport Centre"
+8710,4208979,1,Redwood City Caltrain Station,"MPT Shuttle/Redwood City Midpoint , SEA Shuttle/Seaport Centre"
+8710,4208978,2,Broadway & Douglas,MPT Shuttle/Redwood City Midpoint 
+8710,4208865,3,505 Broadway @ Cardinal Hall,MPT Shuttle/Redwood City Midpoint 
+8710,4208846,4,Barron Ave & Broadway @ Discovery Hall,MPT Shuttle/Redwood City Midpoint 
+8710,4208979,5,Redwood City Caltrain Station,"MPT Shuttle/Redwood City Midpoint , SEA Shuttle/Seaport Centre"
+8711,4208979,1,Redwood City Caltrain Station,"MPT Shuttle/Redwood City Midpoint , SEA Shuttle/Seaport Centre"
+8711,4208978,2,Broadway & Douglas,MPT Shuttle/Redwood City Midpoint 
+8711,4208865,3,505 Broadway @ Cardinal Hall,MPT Shuttle/Redwood City Midpoint 
+8711,4208846,4,Barron Ave & Broadway @ Discovery Hall,MPT Shuttle/Redwood City Midpoint 
+8711,4208979,5,Redwood City Caltrain Station,"MPT Shuttle/Redwood City Midpoint , SEA Shuttle/Seaport Centre"
+8712,4208847,1,Belmont Caltrain Station,RLC Shuttle /Redwood LIFE Caltrain
+8712,4209057,2,Marine Pkwy / Twin Dolphin (AM Only),RLC Shuttle /Redwood LIFE Caltrain
+8712,4208985,3,800 Bridge Pkwy.,RLC Shuttle /Redwood LIFE Caltrain
+8712,4208986,4,Bridge Pkwy. & Island Drive,RLC Shuttle /Redwood LIFE Caltrain
+8712,4208987,5,1600-1800 Bridge Pkwy,RLC Shuttle /Redwood LIFE Caltrain
+8712,4208988,6,2800-3000 Bridge Pkwy.,RLC Shuttle /Redwood LIFE Caltrain
+8712,4208989,7,3400-3600 Bridge Pkwy.,RLC Shuttle /Redwood LIFE Caltrain
+8712,4209055,8,Marine Pkwy / Boardwalk Pl,RLC Shuttle /Redwood LIFE Caltrain
+8712,4209056,9,Marine Pkwy / Sandpiper Ln,RLC Shuttle /Redwood LIFE Caltrain
+8712,4208847,10,Belmont Caltrain Station,RLC Shuttle /Redwood LIFE Caltrain
+8713,4208847,1,Belmont Caltrain Station,RLC Shuttle /Redwood LIFE Caltrain
+8713,4208985,2,800 Bridge Pkwy.,RLC Shuttle /Redwood LIFE Caltrain
+8713,4208986,3,Bridge Pkwy. & Island Drive,RLC Shuttle /Redwood LIFE Caltrain
+8713,4208987,4,1600-1800 Bridge Pkwy,RLC Shuttle /Redwood LIFE Caltrain
+8713,4208988,5,2800-3000 Bridge Pkwy.,RLC Shuttle /Redwood LIFE Caltrain
+8713,4208989,6,3400-3600 Bridge Pkwy.,RLC Shuttle /Redwood LIFE Caltrain
+8713,4209055,7,Marine Pkwy / Boardwalk Pl,RLC Shuttle /Redwood LIFE Caltrain
+8713,4209056,8,Marine Pkwy / Sandpiper Ln,RLC Shuttle /Redwood LIFE Caltrain
+8713,4209058,9,Marine Pkwy / Oracle Pkwy (PM Stop),RLC Shuttle /Redwood LIFE Caltrain
+8713,4208847,10,Belmont Caltrain Station,RLC Shuttle /Redwood LIFE Caltrain
+8714,4208910,1,"South San Francisco BART (OPB, Bay #1)",OPB Shuttle/Oyster Point BART 
+8714,4208836,2,Oyster Point Blvd / Gateway,"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain"
+8714,4208912,3,1120 Veterans Blvd.,"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry "
+8714,4208911,4,The Cove,"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry "
+8714,4208913,5,220 Oyster Point,"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain"
+8714,4208914,6,200 Oyster Point,"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain"
+8714,4208915,7,Oyster Point Blvd / Eccles (EB),"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry "
+8714,4208720,8,352 Oyster Point,"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry "
+8714,4208917,9,Cul-de-Sac (395/400 Oyster Point Blvd),"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry "
+8714,4208910,10,"South San Francisco BART (OPB, Bay #1)",OPB Shuttle/Oyster Point BART 
+8715,4208910,1,"South San Francisco BART (OPB, Bay #1)",OPB Shuttle/Oyster Point BART 
+8715,4208836,2,Oyster Point Blvd / Gateway,"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain"
+8715,4208913,3,220 Oyster Point,"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain"
+8715,4208914,4,200 Oyster Point,"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain"
+8715,4208915,5,Oyster Point Blvd / Eccles (EB),"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry "
+8715,4208720,6,352 Oyster Point,"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry "
+8715,4208917,7,Cul-de-Sac (395/400 Oyster Point Blvd),"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry "
+8715,4208912,8,1120 Veterans Blvd.,"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry "
+8715,4208911,9,The Cove,"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry "
+8715,4208910,10,"South San Francisco BART (OPB, Bay #1)",OPB Shuttle/Oyster Point BART 
+8716,4210206,1,Daly City BART,"DCB Shuttle/Daly City Bayshore, DCS Shuttle/Daly City Seton, SKY Shuttle/Skyline College Express"
+8716,4210205,2,Mission/Wellington,DCB Shuttle/Daly City Bayshore
+8716,4208884,3,Balboa Park BART (Geneva/Delano),"BCP Shuttle/Brisbane Crocker Park, DCB Shuttle/Daly City Bayshore"
+8716,4210208,4,Mission Safeway,DCB Shuttle/Daly City Bayshore
+8716,4210204,5,Walgreens (998 Geneva) - Eastbound,DCB Shuttle/Daly City Bayshore
+8717,4210211,1,7 Mile House (Bayshore/Geneva),DCB Shuttle/Daly City Bayshore
+8717,4210202,2,Linda Vista/Jacqueline Ln,DCB Shuttle/Daly City Bayshore
+8717,4210201,3,Bay Ridge/Accacia St.,DCB Shuttle/Daly City Bayshore
+8717,4210200,4,Martin/Schwerin St.,DCB Shuttle/Daly City Bayshore
+8717,4210199,5,Schwerin/Otillia St.,DCB Shuttle/Daly City Bayshore
+8717,4210198,6,Rio Verde/Partridge St.,DCB Shuttle/Daly City Bayshore
+8717,4210210,7,Bayshore Community Center,DCB Shuttle/Daly City Bayshore
+8717,4210197,8,Carter/Saddleback Dr.,DCB Shuttle/Daly City Bayshore
+8717,4210209,9,Walgreens (965 Geneva) - Westbound,DCB Shuttle/Daly City Bayshore
+8717,4210208,10,Mission Safeway,DCB Shuttle/Daly City Bayshore
+8717,4210203,11,Balboa Park BART (MUNI),DCB Shuttle/Daly City Bayshore
+8717,4210207,12,North Peninsula Food Pantry (San Jose/Bepler),DCB Shuttle/Daly City Bayshore
+8717,4210206,13,Daly City BART,"DCB Shuttle/Daly City Bayshore, DCS Shuttle/Daly City Seton, SKY Shuttle/Skyline College Express"
+8718,4210137,1,Menlo Park Caltrain (Marsh Rd. Shuttle Stop),M3 Shuttle /Marsh Road 
+8718,4210155,2,Post Office (AM Stop),M3 Shuttle /Marsh Road 
+8718,4210153,3,Bohannon Dr & Campbell Ave (AM Stop),M3 Shuttle /Marsh Road 
+8718,4210151,4,4100 Bohannon (AM Stop),M3 Shuttle /Marsh Road 
+8718,4210149,5,Scott & Marsh Rd (AM Stop),M3 Shuttle /Marsh Road 
+8718,4210146,6,Constitution Dr & Chrysler Dr,M3 Shuttle /Marsh Road 
+8718,4210145,7,Chrysler Dr & Independence Dr,M3 Shuttle /Marsh Road 
+8718,4210144,8,149 Commonwealth,M3 Shuttle /Marsh Road 
+8718,4210143,9,TIDE Academy,M3 Shuttle /Marsh Road 
+8718,4210142,10,180 Jefferson,M3 Shuttle /Marsh Road 
+8718,4210141,11,Constitution Dr & Chilco St,M3 Shuttle /Marsh Road 
+8718,4210140,12,3641 Haven (Elan Menlo Park),M3 Shuttle /Marsh Road 
+8718,4210139,13,3639 Haven (Anton Menlo Park),M3 Shuttle /Marsh Road 
+8718,4210138,14,3760 Haven (Quicken),M3 Shuttle /Marsh Road 
+8718,4210137,15,Menlo Park Caltrain (Marsh Rd. Shuttle Stop),M3 Shuttle /Marsh Road 
+8719,4210137,1,Menlo Park Caltrain (Marsh Rd. Shuttle Stop),M3 Shuttle /Marsh Road 
+8719,4210145,2,Chrysler Dr & Independence Dr,M3 Shuttle /Marsh Road 
+8719,4210144,3,149 Commonwealth,M3 Shuttle /Marsh Road 
+8719,4210143,4,TIDE Academy,M3 Shuttle /Marsh Road 
+8719,4210142,5,180 Jefferson,M3 Shuttle /Marsh Road 
+8719,4210141,6,Constitution Dr & Chilco St,M3 Shuttle /Marsh Road 
+8719,4210140,7,3641 Haven (Elan Menlo Park),M3 Shuttle /Marsh Road 
+8719,4210139,8,3639 Haven (Anton Menlo Park),M3 Shuttle /Marsh Road 
+8719,4210138,9,3760 Haven (Quicken),M3 Shuttle /Marsh Road 
+8719,4210148,10,Scott & Marsh Rd (PM Stop),M3 Shuttle /Marsh Road 
+8719,4210150,11,4100 Bohannon (PM Stop),M3 Shuttle /Marsh Road 
+8719,4210152,12,Bohannon Dr & Campbell Ave (PM Stop),M3 Shuttle /Marsh Road 
+8719,4210154,13,Post Office (PM Stop),M3 Shuttle /Marsh Road 
+8719,4210137,14,Menlo Park Caltrain (Marsh Rd. Shuttle Stop),M3 Shuttle /Marsh Road 
+8720,4210196,1,Menlo Park Caltrain (Willow Rd. Shuttle Stop),M4 Shuttle /Willow Road
+8720,4210170,2,Linfield Dr & Waverley St,"M1 Shuttle/Crosstown, M4 Shuttle /Willow Road"
+8720,4210168,3,Linfield Dr & Middlefield Rd (AM Stop),M4 Shuttle /Willow Road
+8720,4210193,4,V.A. Medical Center,"M1 Shuttle/Crosstown, M4 Shuttle /Willow Road"
+8720,4210162,5,O'Brien Dr & Willow Rd (AM Stop),M4 Shuttle /Willow Road
+8720,4226627,6,O'Brien & Kelly (OB),M4 Shuttle /Willow Road
+8720,4210160,7,1200 O'Brien (AM Stop),M4 Shuttle /Willow Road
+8720,4210158,8,1505 O'Brien,M4 Shuttle /Willow Road
+8720,4226628,9,1555 O'Brien,M4 Shuttle /Willow Road
+8720,4210196,10,Menlo Park Caltrain (Willow Rd. Shuttle Stop),M4 Shuttle /Willow Road
+8721,4210196,1,Menlo Park Caltrain (Willow Rd. Shuttle Stop),M4 Shuttle /Willow Road
+8721,4226628,2,1555 O'Brien,M4 Shuttle /Willow Road
+8721,4210158,3,1505 O'Brien,M4 Shuttle /Willow Road
+8721,4210159,4,1200 O'Brien (PM Stop),M4 Shuttle /Willow Road
+8721,4226626,5,O'Brien & Kelly (IB),M4 Shuttle /Willow Road
+8721,4210161,6,O'Brien Dr & Willow Rd (PM Stop),M4 Shuttle /Willow Road
+8721,4210193,7,V.A. Medical Center,"M1 Shuttle/Crosstown, M4 Shuttle /Willow Road"
+8721,4210167,8,Linfield Dr & Middlefield Rd (PM Stop),M4 Shuttle /Willow Road
+8721,4210169,9,Linfield Dr & Waverley St,"M1 Shuttle/Crosstown, M4 Shuttle /Willow Road"
+8721,4210196,10,Menlo Park Caltrain (Willow Rd. Shuttle Stop),M4 Shuttle /Willow Road
+8722,4210195,1,Belle Haven Community Campus ,M1 Shuttle/Crosstown
+8722,4210135,2,Terminal Ave & Modoc Ave,M1 Shuttle/Crosstown
+8722,4210134,3,Chilco St & Hamilton Ave,M1 Shuttle/Crosstown
+8722,4210194,4,Chilco & Ivy (IB) ,M1 Shuttle/Crosstown
+8722,4210132,5,Ivy Dr & Sevier Ave,M1 Shuttle/Crosstown
+8722,4210130,6,Ivy Dr & Willow Rd,M1 Shuttle/Crosstown
+8722,4210128,7,Willow Rd & Newbridge St,M1 Shuttle/Crosstown
+8722,4210193,8,V.A. Medical Center,"M1 Shuttle/Crosstown, M4 Shuttle /Willow Road"
+8722,4210163,9,Willow Rd & Coleman Ave,M1 Shuttle/Crosstown
+8722,4210126,10,Willow Rd & Nash Ave,M1 Shuttle/Crosstown
+8722,4210166,11,Willow Rd & Clover Ln,M1 Shuttle/Crosstown
+8722,4210192,12,Menlo Medical Clinic,M1 Shuttle/Crosstown
+8722,4210169,13,Linfield Dr & Waverley St,"M1 Shuttle/Crosstown, M4 Shuttle /Willow Road"
+8722,4210124,14,Linfield Dr & Laurel St,M1 Shuttle/Crosstown
+8722,4210122,15,Willow Rd & Alma St,M1 Shuttle/Crosstown
+8722,4210191,16,Menlo Park Library ,M1 Shuttle/Crosstown
+8722,4210120,17,Ravenswood Ave & Pine St,M1 Shuttle/Crosstown
+8722,4210190,18,Middlefield & Oak Grove Ave,M1 Shuttle/Crosstown
+8722,4210119,19,Glenwood Ave & Mills Ct,M1 Shuttle/Crosstown
+8722,4210117,20,Glenwood Ave & El Camino Real,M1 Shuttle/Crosstown
+8722,4210188,21,Crane Place,M1 Shuttle/Crosstown
+8722,4210115,22,Santa Cruz & Evelyn,M1 Shuttle/Crosstown
+8722,4210186,23,Santa Cruz & Chestnut ,M1 Shuttle/Crosstown
+8722,4210114,24,Santa Cruz & Doyle,M1 Shuttle/Crosstown
+8722,4210101,25,Menlo Park Caltrain (Crosstown Shuttle Stop),M1 Shuttle/Crosstown
+8722,4210184,26,Safeway (El Camino Real/Middle Ave),M1 Shuttle/Crosstown
+8722,4210183,27,Little House Recreation Center,M1 Shuttle/Crosstown
+8722,4210113,28,University Dr & Middle Ave,M1 Shuttle/Crosstown
+8722,4210182,29,Partridge/Kennedy,M1 Shuttle/Crosstown
+8722,4210181,30,Palo Alto Medical Foundation,M1 Shuttle/Crosstown
+8722,4210172,31,Palo Alto Caltrain (Lytton & Alma),M1 Shuttle/Crosstown
+8722,4210180,32,Hoover Pavilion,M1 Shuttle/Crosstown
+8722,4210179,33,Stanford Shopping Center,M1 Shuttle/Crosstown
+8722,4210178,34,Nordstrom / Crate & Barrel,M1 Shuttle/Crosstown
+8722,4210111,35,Welch Rd @ Lucile Packard Children's Hospital,M1 Shuttle/Crosstown
+8722,4210177,36,Stanford Medical Center (900 Welch Rd.),M1 Shuttle/Crosstown
+8722,4210109,37,Monte Rosa Dr & Eastridge Ave,M1 Shuttle/Crosstown
+8722,4210108,38,Avy Ave & Monte Rosa Dr,M1 Shuttle/Crosstown
+8722,4210107,39,Avy Ave & Altschul Ave,M1 Shuttle/Crosstown
+8722,4210106,40,Alameda de las Pulgas & Avy Ave,M1 Shuttle/Crosstown
+8722,4210105,41,Alameda de las Pulgas & Sharon Rd,M1 Shuttle/Crosstown
+8722,4210104,42,Alameda de las Pulgas & Santa Cruz Ave,M1 Shuttle/Crosstown
+8722,4210175,43,Menlo Commons,M1 Shuttle/Crosstown
+8722,4210176,44,Sharon Heights Shopping Center,M1 Shuttle/Crosstown
+8723,4210176,1,Sharon Heights Shopping Center,M1 Shuttle/Crosstown
+8723,4210109,2,Monte Rosa Dr & Eastridge Ave,M1 Shuttle/Crosstown
+8723,4210108,3,Avy Ave & Monte Rosa Dr,M1 Shuttle/Crosstown
+8723,4210107,4,Avy Ave & Altschul Ave,M1 Shuttle/Crosstown
+8723,4210106,5,Alameda de las Pulgas & Avy Ave,M1 Shuttle/Crosstown
+8723,4210105,6,Alameda de las Pulgas & Sharon Rd,M1 Shuttle/Crosstown
+8723,4210104,7,Alameda de las Pulgas & Santa Cruz Ave,M1 Shuttle/Crosstown
+8723,4210175,8,Menlo Commons,M1 Shuttle/Crosstown
+8723,4210174,9,Stanford Medical Center (Welch/Blake Wilbur Dr),M1 Shuttle/Crosstown
+8723,4210110,10,Welch Rd @ Lucile Packard Children's Hospital,M1 Shuttle/Crosstown
+8723,4210179,11,Stanford Shopping Center,M1 Shuttle/Crosstown
+8723,4210178,12,Nordstrom / Crate & Barrel,M1 Shuttle/Crosstown
+8723,4210180,13,Hoover Pavilion,M1 Shuttle/Crosstown
+8723,4210181,14,Palo Alto Medical Foundation,M1 Shuttle/Crosstown
+8723,4210172,15,Palo Alto Caltrain (Lytton & Alma),M1 Shuttle/Crosstown
+8723,4210173,16,University/Partridge Ave.,M1 Shuttle/Crosstown
+8723,4210112,17,University Dr & Middle Ave,M1 Shuttle/Crosstown
+8723,4210183,18,Little House Recreation Center,M1 Shuttle/Crosstown
+8723,4210184,19,Safeway (El Camino Real/Middle Ave),M1 Shuttle/Crosstown
+8723,4210101,20,Menlo Park Caltrain (Crosstown Shuttle Stop),M1 Shuttle/Crosstown
+8723,4210103,21,Santa Cruz & Curtis ,M1 Shuttle/Crosstown
+8723,4210185,22,Santa Cruz & Crane,M1 Shuttle/Crosstown
+8723,4210187,23,Crane Place,M1 Shuttle/Crosstown
+8723,4210116,24,Glenwood Ave & El Camino Real,M1 Shuttle/Crosstown
+8723,4210118,25,Glenwood Ave & Mills Ct,M1 Shuttle/Crosstown
+8723,4210189,26,Middlefield & Oak Grove Ave,M1 Shuttle/Crosstown
+8723,4210102,27,Ravenswood Ave & Pine St,M1 Shuttle/Crosstown
+8723,4210191,28,Menlo Park Library ,M1 Shuttle/Crosstown
+8723,4210121,29,Willow Rd & Alma St,M1 Shuttle/Crosstown
+8723,4210123,30,Linfield Dr & Laurel St,M1 Shuttle/Crosstown
+8723,4210170,31,Linfield Dr & Waverley St,"M1 Shuttle/Crosstown, M4 Shuttle /Willow Road"
+8723,4210192,32,Menlo Medical Clinic,M1 Shuttle/Crosstown
+8723,4210165,33,Willow Rd & Clover Ln,M1 Shuttle/Crosstown
+8723,4210125,34,Willow Rd & Nash Ave,M1 Shuttle/Crosstown
+8723,4210164,35,Willow Rd & Coleman Ave,M1 Shuttle/Crosstown
+8723,4210193,36,V.A. Medical Center,"M1 Shuttle/Crosstown, M4 Shuttle /Willow Road"
+8723,4210127,37,Willow Rd & Newbridge St,M1 Shuttle/Crosstown
+8723,4210129,38,Ivy Dr & Willow Rd,M1 Shuttle/Crosstown
+8723,4210131,39,Ivy Dr & Sevier Ave,M1 Shuttle/Crosstown
+8723,4210171,40,Chilco & Ivy (OB),M1 Shuttle/Crosstown
+8723,4210133,41,Chilco St & Hamilton Ave,M1 Shuttle/Crosstown
+8723,4210136,42,Terminal Ave & Modoc Ave,M1 Shuttle/Crosstown
+8723,4210195,43,Belle Haven Community Campus ,M1 Shuttle/Crosstown
+8724,4210206,1,Daly City BART,"DCB Shuttle/Daly City Bayshore, DCS Shuttle/Daly City Seton, SKY Shuttle/Skyline College Express"
+8724,4210390,2,Skyline College - South Bus Stop,SKY Shuttle/Skyline College Express
+8724,4210391,3,Skyline College - North Drop-off Loop ,SKY Shuttle/Skyline College Express
+8724,4210206,4,Daly City BART,"DCB Shuttle/Daly City Bayshore, DCS Shuttle/Daly City Seton, SKY Shuttle/Skyline College Express"
+8725,4210206,1,Daly City BART,"DCB Shuttle/Daly City Bayshore, DCS Shuttle/Daly City Seton, SKY Shuttle/Skyline College Express"
+8725,4210390,2,Skyline College - South Bus Stop,SKY Shuttle/Skyline College Express
+8725,4210391,3,Skyline College - North Drop-off Loop ,SKY Shuttle/Skyline College Express
+8725,4210206,4,Daly City BART,"DCB Shuttle/Daly City Bayshore, DCS Shuttle/Daly City Seton, SKY Shuttle/Skyline College Express"
+8754,4208920,1,South San Francisco Ferry Terminal,"OPF Shuttle/Oyster Point Ferry , UGF Shuttle/Utah/Grand Ferry "
+8754,4208916,2,384 Oyster Point,OPF Shuttle/Oyster Point Ferry 
+8754,4208917,3,Cul-de-Sac (395/400 Oyster Point Blvd),"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry "
+8754,4209067,4,Oyster Point Blvd / Eccles (WB),OPF Shuttle/Oyster Point Ferry 
+8754,4208912,5,1120 Veterans Blvd.,"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry "
+8754,4208911,6,The Cove,"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry "
+8754,4208718,7,701 Gateway Blvd.,"OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART "
+8754,4208921,8,169 Harbor Way (AM Only),"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8754,4208922,9,230 E. Grand Ave. (AM Only),"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8754,4208923,10,Kimball & E. Grand Ave.,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8754,4208924,11,390 Swift Ave.,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8754,4208929,12,400/450 E. Jamie Court,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8754,4208719,13,201 Haskins Way,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8754,4208925,14,475 E. Grand Ave.,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8754,4208926,15,Cabot/Allerton Ave.,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8754,4208927,16,349 Littlefield Ave. (AM Only),"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8754,4208928,17,SSF Conference Center,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8754,4208930,18,South San Francisco Caltrain,"OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry , OTP Shuttle/One Tower Place , UGC Shuttle/Utah/Grand Caltrain"
+8755,4208930,1,South San Francisco Caltrain,"OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry , OTP Shuttle/One Tower Place , UGC Shuttle/Utah/Grand Caltrain"
+8755,4208928,2,SSF Conference Center,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8755,4208842,3,380 Littlefield Ave. (PM Only),"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8755,4208923,4,Kimball & E. Grand Ave.,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8755,4208924,5,390 Swift Ave.,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8755,4208929,6,400/450 E. Jamie Court,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8755,4208719,7,201 Haskins Way,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8755,4208925,8,475 E. Grand Ave.,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8755,4208926,9,Cabot/Allerton Ave.,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8755,4251853,10,E. Grand & Pointe Grand,"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8755,4208840,11,213 E. Grand Ave. (PM Only),"OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART , UGC Shuttle/Utah/Grand Caltrain, UGF Shuttle/Utah/Grand Ferry "
+8755,4208717,12,1000 Gateway Blvd.,"OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry , UGB Shuttle/Utah/Grand BART "
+8755,4208912,13,1120 Veterans Blvd.,"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry "
+8755,4208911,14,The Cove,"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry "
+8755,4208915,15,Oyster Point Blvd / Eccles (EB),"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry "
+8755,4208720,16,352 Oyster Point,"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry "
+8755,4208917,17,Cul-de-Sac (395/400 Oyster Point Blvd),"OPB Shuttle/Oyster Point BART , OPC Shuttle/Oyster Point Caltrain, OPF Shuttle/Oyster Point Ferry "
+8755,4208920,18,South San Francisco Ferry Terminal,"OPF Shuttle/Oyster Point Ferry , UGF Shuttle/Utah/Grand Ferry "
